@@ -582,8 +582,11 @@ function guardarSilencioso(){
 }
 // Al salir o cambiar de pestaña, guarda lo pendiente
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState !== 'hidden' || !EN_LINEA || !sucio || !hayAlgo()) return;
-  try { if (navigator.sendBeacon(ENDPOINT, new Blob([paquete(estadoActual())], {type:'text/plain;charset=utf-8'}))) sucio = false; } catch (e) {}
+  if (!EN_LINEA || !sucio || !hayAlgo()) return;
+  if (document.visibilityState === 'hidden'){
+    // envío de respaldo; como no se puede confirmar, los cambios siguen pendientes hasta el próximo guardado confirmado
+    try { navigator.sendBeacon(ENDPOINT, new Blob([paquete(estadoActual())], {type:'text/plain;charset=utf-8'})); } catch (e) {}
+  } else guardarSilencioso();
 });
 const bSave = document.getElementById('bSave');
 bSave.addEventListener('click', async () => {
