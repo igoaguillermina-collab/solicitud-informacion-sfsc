@@ -358,7 +358,9 @@ function persist(){
   save();
 }
 let ft;
-function flash(t, ms){ const s = document.getElementById('saved'); s.textContent = t; clearTimeout(ft); ft = setTimeout(() => s.textContent = '', ms || 2500); }
+function flash(t, tipo){ const s = document.getElementById('saved'); s.textContent = t; s.style.color = tipo === 'mal' ? 'var(--req)' : tipo === 'pend' ? 'var(--muted)' : 'var(--ok)'; }
+function hora(){ const d = new Date(); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
+let cambios = 0;
 function input(type, key, o){
   o = o || {};
   if (type === 'select'){
@@ -500,7 +502,8 @@ function refresh(){
   document.querySelectorAll('input.miss').forEach(i => { if (i.value.trim()) i.classList.remove('miss'); });
 }
 function cambio(){
-  persist(); refresh(); sucio = true;
+  persist(); refresh(); sucio = true; cambios++;
+  if (EN_LINEA) flash('Cambios sin guardar', 'pend');
   clearTimeout(timer);
   if (EN_LINEA) timer = setTimeout(guardarSilencioso, 15000);   // guarda con el equipo tras 15 s sin cambios
 }
@@ -562,12 +565,20 @@ function sid(){
 function paquete(estado){ return JSON.stringify({sid:sid(), estado:estado, pendientes:faltantes().length + faltaQuien().length, meta:meta(), respuestas:collect()}); }
 function estadoActual(){ return state.__enviado ? 'enviado' : 'avance'; }
 async function guardarRemoto(estado){
-  await fetch(ENDPOINT, {method:'POST', mode:'no-cors', keepalive:true, headers:{'Content-Type':'text/plain;charset=utf-8'}, body:paquete(estado)});
-  sucio = false; clearTimeout(timer);
+  const c = cambios;
+  const r = await fetch(ENDPOINT, {method:'POST', keepalive:true, headers:{'Content-Type':'text/plain;charset=utf-8'}, body:paquete(estado)});
+  const t = (await r.text()).trim();
+  if (t !== 'ok') throw new Error('sin confirmación del receptor');
+  if (c === cambios){ sucio = false; clearTimeout(timer); }
+  flash('Guardado con nuestro equipo · ' + hora());
 }
 function guardarSilencioso(){
   if (!EN_LINEA || !sucio || !hayAlgo()) return;
-  guardarRemoto(estadoActual()).then(() => flash('Avance guardado')).catch(() => {});
+  flash('Guardando…', 'pend');
+  guardarRemoto(estadoActual()).catch(() => {
+    flash('No se pudo guardar; se reintentará', 'mal');
+    clearTimeout(timer); timer = setTimeout(guardarSilencioso, 20000);
+  });
 }
 // Al salir o cambiar de pestaña, guarda lo pendiente
 document.addEventListener('visibilitychange', () => {
@@ -577,10 +588,10 @@ document.addEventListener('visibilitychange', () => {
 const bSave = document.getElementById('bSave');
 bSave.addEventListener('click', async () => {
   persist();
-  if (!EN_LINEA){ flash('Avance guardado en este navegador', 4000); return; }
+  if (!EN_LINEA){ flash('Avance guardado en este navegador'); return; }
   bSave.disabled = true; bSave.textContent = 'Guardando…';
-  try { await guardarRemoto(estadoActual()); flash('Avance guardado con nuestro equipo', 4000); }
-  catch (e) { flash('Sin conexión: su avance sigue guardado en este navegador', 6000); }
+  try { await guardarRemoto(estadoActual()); }
+  catch (e) { flash('No se pudo guardar en línea; su avance sigue en este navegador', 'mal'); clearTimeout(timer); timer = setTimeout(guardarSilencioso, 20000); }
   bSave.disabled = false; bSave.textContent = 'Guardar avance';
 });
 
@@ -637,13 +648,13 @@ if (!EN_LINEA) document.getElementById('bCopy').style.display = 'none';
 function avisoCorreo(intro){
   return [h('p', null, [tx(intro + ' Para completar el envío, adjúntelo en un correo dirigido a '), correo(), tx('. El botón abre el mensaje con el destinatario y el asunto ya indicados; solo falta adjuntar el archivo descargado.')]), h('div', {class:'mailrow'}, [botonCorreo()])];
 }
-function avisoFaltantes(f, fq){
+function avisoFaltantes(f, fq, guardado){
   f.forEach(x => { x.box.classList.add('miss'); nav.querySelector('[data-s=' + SECCIONES[x.si].id + ']').classList.add('falta'); });
   fq.forEach(k => document.getElementById(k).classList.add('miss'));
   const ul = h('ul', {class:'faltan'});
   f.forEach(x => { const b = h('button', {type:'button', text:x.num + '  ' + x.l}); b.addEventListener('click', () => { go(x.si, true); x.box.scrollIntoView({block:'center'}); }); ul.appendChild(h('li', null, [b])); });
   if (fq.length){ const b = h('button', {type:'button', text:'Nombre y correo de quien responde'}); b.addEventListener('click', () => { go(steps.length - 1, true); document.getElementById(fq[0]).focus(); }); ul.appendChild(h('li', null, [b])); }
-  const intro = EN_LINEA ? 'Su avance quedó guardado con nuestro equipo. Para registrar el envío como definitivo, complete lo siguiente:' : 'Para completar el envío, responda lo siguiente:';
+  const intro = !EN_LINEA ? 'Para completar el envío, responda lo siguiente:' : (guardado ? 'Su avance quedó guardado con nuestro equipo. ' : '') + 'Para registrar el envío como definitivo, complete lo siguiente:';
   return [h('p', null, [tx(intro)]), ul];
 }
 let enviando = false;
@@ -652,9 +663,10 @@ async function enviar(){
   persist();
   const f = faltantes(), fq = faltaQuien();
   if (f.length || fq.length){
-    if (EN_LINEA && hayAlgo()) guardarRemoto(estadoActual()).catch(() => {});   // el avance se guarda aunque falten respuestas
+    let guardado = false;   // el avance se guarda aunque falten respuestas
+    if (EN_LINEA && hayAlgo()){ try { await guardarRemoto(estadoActual()); guardado = true; } catch (e) { flash('No se pudo guardar en línea', 'mal'); } }
     const nf = f.length + (fq.length ? 1 : 0);
-    showDone(nf === 1 ? 'Falta 1 respuesta indispensable' : 'Faltan ' + nf + ' respuestas indispensables', avisoFaltantes(f, fq), true);
+    showDone(nf === 1 ? 'Falta 1 respuesta indispensable' : 'Faltan ' + nf + ' respuestas indispensables', avisoFaltantes(f, fq, guardado), true);
     refresh();
     return;
   }
