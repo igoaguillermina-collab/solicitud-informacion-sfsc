@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Solicitud de información · Adopción de Salesforce Financial Services Cloud</title>
+<title>Data request · Adopción de Salesforce Financial Services Cloud</title>
 <style>
 :root{
   --navy:#072146; --blue:#004481; --mid:#1973B8; --aqua:#2DCCCD;
@@ -13,72 +13,77 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14.5px;line-height:1.45}
 a{color:var(--blue)}
 .topbar{background:var(--white);border-bottom:1px solid var(--line)}
 .topbar .in{max-width:1120px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .topbar svg{height:30px;width:auto;display:block}
 .topbar .who{font-size:13px;color:var(--muted);text-align:right}
 .hero{background:var(--navy);color:var(--white)}
-.hero .in{max-width:1120px;margin:0 auto;padding:44px 24px 40px}
-.hero .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--aqua);font-weight:600;margin:0 0 10px}
-.hero h1{font-size:32px;line-height:1.2;font-weight:300;margin:0 0 8px;text-wrap:balance}
+.hero .in{max-width:1120px;margin:0 auto;padding:34px 24px 46px}
+.hero .eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#fff;opacity:.7;font-weight:600;margin:0 0 12px}
+.hero h1{font-size:30px;line-height:1.2;font-weight:300;margin:0 0 14px;text-wrap:balance;max-width:880px}
 .hero .sub{font-size:17px;color:#C9D6E6;margin:0 0 22px;max-width:760px}
 .hero p.lead{max-width:760px;margin:0;color:#E6EDF5}
 .notes{max-width:1120px;margin:-22px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.note{background:var(--white);border:1px solid var(--line);border-top:3px solid var(--mid);border-radius:4px;padding:14px 16px}
+.note{background:var(--white);border:1px solid var(--line);border-top:3px solid var(--blue);border-radius:4px;padding:12px 16px;transition:background .18s,border-color .18s,box-shadow .18s,transform .18s}
+.note b,.note span{transition:color .18s}
+.note:hover{background:var(--blue);border-color:var(--blue);box-shadow:0 8px 20px rgba(7,33,70,.22);transform:translateY(-2px)}
+.note:hover b{color:#fff}
+.note:hover span{color:#DCE6F2}
 .note b{display:block;color:var(--navy);font-size:14px;margin-bottom:2px}
 .note span{font-size:13.5px;color:var(--muted)}
-.wrap{max-width:1120px;margin:0 auto;padding:28px 24px 120px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:28px}
+.wrap{max-width:1120px;margin:0 auto;padding:22px 24px 110px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px}
 nav.side{position:sticky;top:18px;align-self:start}
 nav.side .ttl{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:6px 0 10px}
-nav.side a{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:4px;text-decoration:none;color:var(--text);font-size:13.5px;line-height:1.35;border-left:3px solid transparent}
+nav.side a{display:flex;gap:10px;align-items:flex-start;padding:6px 10px;border-radius:4px;text-decoration:none;color:var(--text);font-size:13.5px;line-height:1.35;border-left:3px solid transparent}
 nav.side a:hover{background:var(--white)}
 nav.side a .n{flex:none;width:20px;height:20px;border-radius:50%;border:1px solid var(--line2);font-size:11px;display:grid;place-items:center;color:var(--muted);background:var(--white);margin-top:1px}
 nav.side a.done .n{background:var(--blue);border-color:var(--blue);color:var(--white)}
 nav.side a.part .n{border-color:var(--mid);color:var(--blue)}
-section.card{background:var(--white);border:1px solid var(--line);border-radius:6px;margin:0 0 22px;scroll-margin-top:16px}
-section.card > header{padding:20px 24px 16px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:flex-start}
-section.card > header .num{flex:none;width:32px;height:32px;border-radius:4px;background:var(--navy);color:var(--white);display:grid;place-items:center;font-weight:600;font-size:15px}
-section.card > header h2{margin:0;font-size:19px;font-weight:600;color:var(--navy);line-height:1.3}
-section.card > header p{margin:3px 0 0;font-size:13.5px;color:var(--muted)}
-.q{padding:18px 24px;border-bottom:1px solid #EDF0F4}
+section.card{background:var(--white);border:1px solid var(--line);border-radius:6px;margin:0 0 14px;scroll-margin-top:16px}
+section.card > header{padding:13px 22px 11px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:flex-start}
+section.card > header .num{flex:none;width:28px;height:28px;border-radius:4px;background:var(--navy);color:var(--white);display:grid;place-items:center;font-weight:600;font-size:14px}
+section.card > header h2{margin:0;font-size:17px;font-weight:600;color:var(--navy);line-height:1.3}
+section.card > header p{margin:1px 0 0;font-size:13px;color:var(--muted)}
+.q{padding:11px 22px 12px;border-bottom:1px solid #EDF0F4}
 .q:last-child{border-bottom:0}
-.q .lbl{display:block;font-weight:600;font-size:15px;margin:0 0 3px;color:var(--text)}
+.q .lbl{display:block;font-weight:600;font-size:14.5px;margin:0 0 2px;color:var(--text)}
 .q .lbl .k{color:var(--mid);font-weight:600;margin-right:8px;font-variant-numeric:tabular-nums}
-.q .help{font-size:13px;color:var(--muted);margin:0 0 10px}
-.q .lbl + .ctl{margin-top:10px}
+.q .help{font-size:12.5px;color:var(--muted);margin:0 0 6px}
+.q .lbl + .ctl{margin-top:6px}
 input[type=text],input[type=number],input[type=email],input[type=month],input[type=date],select,textarea{
-  font:inherit;color:var(--text);background:var(--white);border:1px solid var(--line2);border-radius:4px;padding:8px 10px;width:100%;max-width:100%}
+  font:inherit;color:var(--text);background:var(--white);border:1px solid var(--line2);border-radius:4px;padding:6px 9px;width:100%;max-width:100%}
 input[type=number]{font-variant-numeric:tabular-nums}
-textarea{min-height:84px;resize:vertical}
+textarea{min-height:52px;resize:vertical}
 input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--mid);outline-offset:1px;border-color:var(--mid)}
 input[type=checkbox],input[type=radio]{accent-color:var(--blue);width:16px;height:16px;margin:0;flex:none}
-.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
 .opts.col{flex-direction:column;align-items:flex-start}
-.opt{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:4px;padding:7px 12px;cursor:pointer;font-size:14px;background:var(--white)}
+.opt{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:4px;padding:5px 10px;cursor:pointer;font-size:13.5px;background:var(--white)}
 .opt:hover{border-color:var(--line2)}
 .opt:has(input:checked){background:var(--soft);border-color:var(--blue)}
 .opt:has(input:focus-visible){outline:2px solid var(--mid);outline-offset:1px}
-.extra{margin-top:10px}
-.extra label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px 16px}
-.grid .f label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+.extra{margin-top:7px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.extra label{font-size:13px;color:var(--muted);white-space:nowrap}
+.extra input{flex:1 1 240px;max-width:520px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:8px 14px}
+.grid .f label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:2px}
 .q .w-s{max-width:200px}.q .w-m{max-width:360px}
 .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px}
 table.t{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
-table.t th{background:#F1F4F8;color:var(--navy);text-align:left;font-weight:600;font-size:12.5px;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-table.t td{padding:6px 8px;border-bottom:1px solid #EDF0F4;vertical-align:middle}
+table.t th{background:#F1F4F8;color:var(--navy);text-align:left;font-weight:600;font-size:12.5px;padding:6px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.t td{padding:3px 6px;border-bottom:1px solid #EDF0F4;vertical-align:middle}
 table.t tr:last-child td{border-bottom:0}
 table.t td.rl{font-size:14px;padding-left:10px}
 table.t td.c{text-align:center}
-table.t input,table.t select{padding:6px 8px;font-size:14px}
-.addrow{margin-top:8px;font:inherit;font-size:13.5px;background:none;border:1px dashed var(--line2);color:var(--blue);border-radius:4px;padding:6px 12px;cursor:pointer}
+table.t input,table.t select{padding:4px 7px;font-size:13.5px}
+.addrow{margin-top:6px;font:inherit;font-size:13.5px;background:none;border:1px dashed var(--line2);color:var(--blue);border-radius:4px;padding:6px 12px;cursor:pointer}
 .addrow:hover{background:var(--soft)}
 .mailrow{margin-top:12px}a.mailbtn{display:inline-block;text-decoration:none}
 .pasos{margin:0 0 16px;padding-left:20px}.pasos li{margin:5px 0}.finb{display:flex;gap:10px;flex-wrap:wrap}.btn:disabled{opacity:.6;cursor:default}
-.resp{background:var(--white);border:1px solid var(--line);border-radius:6px;margin:0 0 22px;padding:18px 24px}
-.resp h2{margin:0 0 12px;font-size:15px;color:var(--navy)}
+.resp{background:var(--white);border:1px solid var(--line);border-radius:6px;margin:0 0 14px;padding:12px 22px 14px}
+.resp h2{margin:0 0 8px;font-size:15px;color:var(--navy)}
 .bar{position:fixed;left:0;right:0;bottom:0;background:var(--white);border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(7,33,70,.06);z-index:20}
 .bar .in{max-width:1120px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .prog{flex:1 1 220px;min-width:200px}
@@ -92,7 +97,7 @@ table.t input,table.t select{padding:6px 8px;font-size:14px}
 .btn.txt{border-color:transparent;color:var(--muted);font-weight:400;padding:9px 6px}
 .btn.txt:hover{background:none;color:var(--text);text-decoration:underline}
 .btn:focus-visible{outline:2px solid var(--mid);outline-offset:2px}
-.done{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:6px;padding:18px 24px;margin:0 0 22px;display:none}
+.done{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:6px;padding:14px 22px;margin:0 0 14px;display:none}
 .done.show{display:block}
 .done h2{margin:0 0 6px;font-size:17px;color:var(--navy)}
 .done p{margin:0 0 6px}
@@ -138,10 +143,9 @@ footer.ft{max-width:1120px;margin:0 auto;padding:0 24px 110px;font-size:12.5px;c
 </div></div>
 
 <div class="hero"><div class="in">
-  <p class="eyebrow">Solicitud de información</p>
-  <h1>Programa de Adopción Integrada de Salesforce Financial Services Cloud</h1>
-  <p class="sub">Banca Comercial · BBVA México</p>
-  <p class="lead">Como acordamos en nuestra sesión del 17 de noviembre, este formulario reúne la información que nos permitirá ajustar nuestra propuesta a la realidad de BBVA. Puede responderse en unos 20 minutos y por más de una persona.</p>
+  <p class="eyebrow">Data request</p>
+  <h1>Programa de Adopción Integrada de Salesforce Financial Services Cloud para BBVA México</h1>
+  <p class="lead">Para preparar una propuesta a la medida de BBVA, le pedimos compartir información general sobre el despliegue, los usuarios y la experiencia del piloto. Completarlo toma alrededor de 20 minutos y pueden participar varias áreas.</p>
 </div></div>
 
 <div class="notes">
@@ -202,7 +206,7 @@ const SECCIONES = [
       {id:'total', l:'Sucursales en total', type:'number'},
       {id:'div', l:'Divisiones', type:'number'},
       {id:'reg', l:'Regiones o zonas', type:'number'} ]},
-  { id:'2', l:'Calendario previsto de las siguientes fases', h:'Una fila por fase u ola. Las fechas pueden ser estimadas.', type:'table', rows:3, add:'Agregar fase',
+  { id:'2', l:'Calendario previsto de las siguientes fases', h:'Una fila por fase u ola. Las fechas pueden ser estimadas.', type:'table', rows:2, add:'Agregar fase',
     cols:[ {id:'fase', l:'Fase u ola', type:'text', ph:'Ej. Fase 2'}, {id:'amb', l:'Divisiones o regiones', type:'text'}, {id:'suc', l:'Sucursales', type:'number', w:110}, {id:'usr', l:'Usuarios', type:'number', w:110}, {id:"fecha", l:"Inicio estimado", type:"text", ph:"Ej. abril de 2027", w:170} ]},
   { id:'3', l:'Fecha en la que BBVA desearía iniciar el acompañamiento', type:"text", ph:"Ej. febrero de 2027", w:"m" }
 ]},
@@ -228,7 +232,7 @@ const SECCIONES = [
       {id:'usr', l:'Usuarios', type:'number'},
       {id:"ini", l:"Inicio", type:"text", ph:"Ej. enero de 2026"} ]},
   { id:'2', l:'Indicadores de uso con los que BBVA cuenta hoy', type:'checks', o:['Usuarios activos','Frecuencia de acceso','Registros por usuario','Uso por rol o por sucursal','Calidad de la información registrada','Aún no se cuenta con indicadores'] },
-  { id:'3', l:'¿Podrían compartirse estos indicadores en forma agregada?', type:'radio', o:['Sí','Sí, una vez formalizado el acuerdo de confidencialidad','No'] },
+  { id:'3', l:'¿Podrían compartirse estos indicadores en forma agregada?', type:'radio', o:['Sí','Sí, tras el acuerdo de confidencialidad','No'] },
   { id:'4', l:'Temas que los usuarios han reportado con mayor frecuencia', type:'checks', o:['Accesos y perfiles','Disponibilidad o calidad de los datos','Desempeño de la plataforma','Funcionalidades que aún no están disponibles','Navegación y facilidad de uso','Integración con otros sistemas','Dudas sobre el uso o el proceso'], other:true },
   { id:'5', l:'Principales aprendizajes del piloto', h:'Lo que funcionó bien y lo que BBVA quisiera hacer distinto en las siguientes fases.', type:'textarea' },
   { id:'6', l:'Resultados de negocio que BBVA espera impulsar con SFSC', type:'checks', o:['Vinculación de clientes','Venta cruzada','Productividad comercial','Experiencia del cliente','Retención','Calidad de la información comercial'], other:true }
@@ -298,7 +302,7 @@ function input(type, key, o){
     (o.o || []).forEach(v => s.appendChild(h('option', {value:v, text:v})));
     return s;
   }
-  if (type === 'textarea') return h('textarea', {'data-key':key, id:o.id, 'aria-label':o.aria, rows:3});
+  if (type === 'textarea') return h('textarea', {'data-key':key, id:o.id, 'aria-label':o.aria, rows:2});
   return h('input', {type:type, 'data-key':key, id:o.id, placeholder:o.ph, 'aria-label':o.aria, min: type === 'number' ? 0 : undefined, inputmode: type === 'number' ? 'numeric' : undefined});
 }
 
@@ -331,7 +335,7 @@ SECCIONES.forEach((s, si) => {
       if (q.w) el.classList.add('w-' + q.w);
       ctl.appendChild(el);
     } else if (q.type === 'radio' || q.type === 'checks'){
-      const g = h('div', {class:'opts' + (q.o.some(o => o.length > 34) ? ' col' : ''), role: q.type === 'radio' ? 'radiogroup' : 'group', 'aria-labelledby':'l_' + key});
+      const g = h('div', {class:'opts' + (q.o.some(o => o.length > 46) ? ' col' : ''), role: q.type === 'radio' ? 'radiogroup' : 'group', 'aria-labelledby':'l_' + key});
       q.o.forEach((o, i) => {
         const inp = q.type === 'radio'
           ? h('input', {type:'radio', name:key, value:o, 'data-key':key})
@@ -448,7 +452,7 @@ function csv(){
   return '﻿' + rows.map(r => r.map(esc).join(',')).join('\r\n');
 }
 function download(){
-  const a = h('a', {href:URL.createObjectURL(new Blob([csv()], {type:'text/csv;charset=utf-8'})), download:'BBVA_SFSC_Solicitud_de_informacion_' + meta().fecha + '.csv'});
+  const a = h('a', {href:URL.createObjectURL(new Blob([csv()], {type:'text/csv;charset=utf-8'})), download:'BBVA_SFSC_Data_request_' + meta().fecha + '.csv'});
   document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
 function showDone(t, p){
@@ -459,8 +463,8 @@ function showDone(t, p){
 /* ---------- Envío ---------- */
 const EN_LINEA = !!ENDPOINT;
 const MAILTO = 'mailto:' + CONTACTO
-  + '?subject=' + encodeURIComponent('Solicitud de información SFSC – respuestas de BBVA')
-  + '&body=' + encodeURIComponent('Estimada Nelly:\n\nAdjunto el archivo con nuestras respuestas a la solicitud de información.\n\nSaludos,');
+  + '?subject=' + encodeURIComponent('Data request SFSC – respuestas de BBVA')
+  + '&body=' + encodeURIComponent('Estimada Nelly:\n\nAdjunto el archivo con nuestras respuestas al data request.\n\nSaludos,');
 const tx = s => document.createTextNode(s);
 function correo(){ return h('a', {href:MAILTO, text:CONTACTO}); }
 function botonCorreo(){ return h('a', {href:MAILTO, class:'btn pri mailbtn', text:'Abrir correo para ' + CONTACTO}); }
