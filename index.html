@@ -489,7 +489,7 @@ function faltaQuien(){ return ['r_nombre','r_correo'].filter(k => !val(k)); }
 function hayAlgo(){ return [...document.querySelectorAll('#form .q')].some(answered) || ['r_nombre','r_area','r_puesto','r_correo'].some(k => val(k)); }
 function refresh(){
   const boxes = [...document.querySelectorAll('#form .q')], done = boxes.filter(answered).length, pend = faltantes();
-  document.getElementById('pTx').textContent = done + ' de ' + boxes.length + ' respondidas · ' + (pend.length ? pend.length + ' indispensables pendientes' : 'indispensables completas');
+  document.getElementById('pTx').textContent = done + ' de ' + boxes.length + ' respondidas · ' + (pend.length ? pend.length + (pend.length === 1 ? ' indispensable pendiente' : ' indispensables pendientes') : 'indispensables completas');
   document.getElementById('pFl').style.width = (boxes.length ? Math.round(done / boxes.length * 100) : 0) + '%';
   SECCIONES.forEach((s, si) => {
     const bs = [...document.querySelectorAll('#' + s.id + ' .q')], d = bs.filter(answered).length, a = nav.querySelector('[data-s=' + s.id + ']');
@@ -653,7 +653,8 @@ async function enviar(){
   const f = faltantes(), fq = faltaQuien();
   if (f.length || fq.length){
     if (EN_LINEA && hayAlgo()) guardarRemoto(estadoActual()).catch(() => {});   // el avance se guarda aunque falten respuestas
-    showDone('Faltan ' + (f.length + (fq.length ? 1 : 0)) + ' respuestas indispensables', avisoFaltantes(f, fq), true);
+    const nf = f.length + (fq.length ? 1 : 0);
+    showDone(nf === 1 ? 'Falta 1 respuesta indispensable' : 'Faltan ' + nf + ' respuestas indispensables', avisoFaltantes(f, fq), true);
     refresh();
     return;
   }
