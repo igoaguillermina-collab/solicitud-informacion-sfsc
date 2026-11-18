@@ -7,12 +7,11 @@
 <title>Data request · Adopción de Salesforce Financial Services Cloud</title>
 <style>
 :root{
-  --navy:#072146; --blue:#004481; --mid:#1973B8; --aqua:#2DCCCD;
+  --navy:#072146; --blue:#004481; --mid:#1973B8; --green:#4CBB7F;
   --bg:#F4F6F9; --line:#D9DEE5; --line2:#B8C2CC; --text:#121212; --muted:#5A6672;
   --white:#fff; --soft:#EAF2FA; --ok:#277A3E;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:14.5px;line-height:1.45}
 a{color:var(--blue)}
 .topbar{background:var(--white);border-bottom:1px solid var(--line)}
@@ -23,108 +22,106 @@ a{color:var(--blue)}
 .hero .in{max-width:1120px;margin:0 auto;padding:28px 24px 28px}
 .hero .eyebrow{display:inline-block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#5FD197;background:rgba(76,187,127,.14);border:1px solid rgba(76,187,127,.45);border-radius:3px;padding:3px 9px;font-weight:700;margin:0 0 12px}
 .hero h1{font-size:26px;line-height:1.22;font-weight:600;letter-spacing:-.01em;margin:0 0 6px;text-wrap:balance;max-width:800px}
-.hero .sub{font-size:17px;color:#C9D6E6;margin:0 0 22px;max-width:760px}
 .hero p.lead{max-width:920px;margin:0 0 16px;color:#C9D6E6;font-size:15px}
 .chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .chips li{display:inline-flex;align-items:center;gap:7px;font-size:13px;line-height:1.2;color:#E6EDF5;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:6px 12px 6px 9px;cursor:default;transition:background .15s,border-color .15s,color .15s}
 .chips svg{width:14px;height:14px;flex:none;stroke:#5FD197;transition:stroke .15s}
-.chips li:hover{background:#4CBB7F;border-color:#4CBB7F;color:#072146}
-.chips li:hover svg{stroke:#072146}
-.notes{max-width:1120px;margin:-22px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.note{background:var(--white);border:1px solid var(--line);border-top:3px solid var(--blue);border-radius:4px;padding:12px 16px;transition:background .18s,border-color .18s,box-shadow .18s,transform .18s}
-.note b,.note span{transition:color .18s}
-.note:hover{background:var(--blue);border-color:var(--blue);box-shadow:0 8px 20px rgba(7,33,70,.22);transform:translateY(-2px)}
-.note:hover b{color:#fff}
-.note:hover span{color:#DCE6F2}
-.note b{display:block;color:var(--navy);font-size:14px;margin-bottom:2px}
-.note span{font-size:13.5px;color:var(--muted)}
-.wrap{max-width:1120px;margin:0 auto;padding:22px 24px 110px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px}
+.chips li:hover{background:var(--green);border-color:var(--green);color:var(--navy)}
+.chips li:hover svg{stroke:var(--navy)}
+.wrap{max-width:1120px;margin:0 auto;padding:22px 24px 110px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:24px}
 nav.side{position:sticky;top:18px;align-self:start}
 nav.side .ttl{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:6px 0 10px}
-nav.side a{display:flex;gap:10px;align-items:flex-start;padding:6px 10px;border-radius:4px;text-decoration:none;color:var(--text);font-size:13.5px;line-height:1.35;border-left:3px solid transparent}
+nav.side a{display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border-radius:4px;text-decoration:none;color:var(--text);font-size:13.5px;line-height:1.35;border-left:3px solid transparent}
 nav.side a:hover{background:var(--white)}
-nav.side a .n{flex:none;width:20px;height:20px;border-radius:50%;border:1px solid var(--line2);font-size:11px;display:grid;place-items:center;color:var(--muted);background:var(--white);margin-top:1px}
+nav.side a.cur{background:var(--white);border-left-color:var(--blue);font-weight:600;color:var(--navy)}
+nav.side a .n{flex:none;width:20px;height:20px;border-radius:50%;border:1px solid var(--line2);font-size:11px;font-weight:400;display:grid;place-items:center;color:var(--muted);background:var(--white);margin-top:1px}
 nav.side a.done .n{background:var(--blue);border-color:var(--blue);color:var(--white)}
 nav.side a.part .n{border-color:var(--mid);color:var(--blue)}
-section.card{background:var(--white);border:1px solid var(--line);border-radius:6px;margin:0 0 14px;scroll-margin-top:16px}
-section.card > header{padding:13px 22px 11px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:flex-start}
-section.card > header .num{flex:none;width:28px;height:28px;border-radius:4px;background:var(--navy);color:var(--white);display:grid;place-items:center;font-weight:600;font-size:14px}
-section.card > header h2{margin:0;font-size:17px;font-weight:600;color:var(--navy);line-height:1.3}
-section.card > header p{margin:1px 0 0;font-size:13px;color:var(--muted)}
-.q{padding:11px 22px 12px;border-bottom:1px solid #EDF0F4}
+section.card{background:var(--white);border:1px solid var(--line);border-radius:6px;margin:0 0 14px}
+.step{display:none}
+.step.on{display:block}
+section.card > header{padding:16px 24px 14px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:flex-start}
+section.card > header .num{flex:none;width:30px;height:30px;border-radius:4px;background:var(--navy);color:var(--white);display:grid;place-items:center;font-weight:600;font-size:15px}
+section.card > header h2{margin:0;font-size:18px;font-weight:600;color:var(--navy);line-height:1.3}
+section.card > header h2:focus{outline:none}
+section.card > header p{margin:1px 0 0;font-size:13.5px;color:var(--muted)}
+.sec-n{margin-left:auto;font-size:12.5px;color:var(--muted);white-space:nowrap;padding-top:7px}
+.q{padding:16px 24px 17px;border-bottom:1px solid #EDF0F4}
 .q:last-child{border-bottom:0}
-.q .lbl{display:block;font-weight:600;font-size:14.5px;margin:0 0 2px;color:var(--text)}
+.q .lbl{display:block;font-weight:600;font-size:15px;margin:0 0 9px;color:var(--text)}
 .q .lbl .k{color:var(--mid);font-weight:600;margin-right:8px;font-variant-numeric:tabular-nums}
-.q .help{font-size:12.5px;color:var(--muted);margin:0 0 6px}
-.q .lbl + .ctl{margin-top:6px}
-input[type=text],input[type=number],input[type=email],input[type=month],input[type=date],select,textarea{
-  font:inherit;color:var(--text);background:var(--white);border:1px solid var(--line2);border-radius:4px;padding:6px 9px;width:100%;max-width:100%}
+input[type=text],input[type=number],input[type=email],select,textarea{
+  font:inherit;color:var(--text);background:var(--white);border:1px solid var(--line2);border-radius:4px;padding:7px 10px;width:100%;max-width:100%}
+input::placeholder,textarea::placeholder{color:#8A96A3}
 input[type=number]{font-variant-numeric:tabular-nums}
-textarea{min-height:52px;resize:vertical}
+textarea{min-height:64px;resize:vertical}
 input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--mid);outline-offset:1px;border-color:var(--mid)}
 input[type=checkbox],input[type=radio]{accent-color:var(--blue);width:16px;height:16px;margin:0;flex:none}
-.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts{display:flex;flex-wrap:wrap;gap:7px}
 .opts.col{flex-direction:column;align-items:flex-start}
-.opt{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:4px;padding:5px 10px;cursor:pointer;font-size:13.5px;background:var(--white)}
+.opt{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:4px;padding:6px 11px;cursor:pointer;font-size:14px;background:var(--white)}
 .opt:hover{border-color:var(--line2)}
 .opt:has(input:checked){background:var(--soft);border-color:var(--blue)}
 .opt:has(input:focus-visible){outline:2px solid var(--mid);outline-offset:1px}
-.extra{margin-top:7px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.extra{margin-top:9px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .extra label{font-size:13px;color:var(--muted);white-space:nowrap}
-.extra input{flex:1 1 240px;max-width:520px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:8px 14px}
-.grid .f label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:2px}
-.q .w-s{max-width:200px}.q .w-m{max-width:360px}
+.extra input{flex:1 1 240px;max-width:560px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px 14px}
+.grid .f label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:3px}
+.q .w-m{max-width:360px}
 .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px}
-table.t{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
-table.t th{background:#F1F4F8;color:var(--navy);text-align:left;font-weight:600;font-size:12.5px;padding:6px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
-table.t td{padding:3px 6px;border-bottom:1px solid #EDF0F4;vertical-align:middle}
+table.t{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+table.t th{background:#F1F4F8;color:var(--navy);text-align:left;font-weight:600;font-size:12.5px;padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.t th.c{text-align:center}
+table.t td{padding:4px 6px;border-bottom:1px solid #EDF0F4;vertical-align:middle}
 table.t tr:last-child td{border-bottom:0}
-table.t td.rl{font-size:14px;padding-left:10px}
+table.t td.rl{font-size:14px;padding:7px 10px}
 table.t td.c{text-align:center}
-table.t input,table.t select{padding:4px 7px;font-size:13.5px}
-.addrow{margin-top:6px;font:inherit;font-size:13.5px;background:none;border:1px dashed var(--line2);color:var(--blue);border-radius:4px;padding:6px 12px;cursor:pointer}
+table.t input[type=text],table.t input[type=number]{padding:5px 8px;font-size:13.5px}
+.addrow{margin-top:8px;font:inherit;font-size:13.5px;background:none;border:1px dashed var(--line2);color:var(--blue);border-radius:4px;padding:6px 12px;cursor:pointer}
 .addrow:hover{background:var(--soft)}
-.mailrow{margin-top:12px}a.mailbtn{display:inline-block;text-decoration:none}
-.pasos{margin:0 0 16px;padding-left:20px}.pasos li{margin:5px 0}.finb{display:flex;gap:10px;flex-wrap:wrap}.btn:disabled{opacity:.6;cursor:default}
-.resp{background:var(--white);border:1px solid var(--line);border-radius:6px;margin:0 0 14px;padding:12px 22px 14px}
-.resp h2{margin:0 0 8px;font-size:15px;color:var(--navy)}
+.mailrow{margin-top:12px}
+a.mailbtn{display:inline-block;text-decoration:none}
+.pasos{margin:0 0 16px;padding-left:20px}
+.pasos li{margin:5px 0}
+.finb{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .bar{position:fixed;left:0;right:0;bottom:0;background:var(--white);border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(7,33,70,.06);z-index:20}
-.bar .in{max-width:1120px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.prog{flex:1 1 220px;min-width:200px}
+.bar .in{max-width:1120px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.prog{flex:1 1 220px;min-width:200px;margin-right:8px}
 .prog .tx{font-size:13px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:5px}
 .prog .tr{height:6px;background:#E3E8EE;border-radius:3px;overflow:hidden}
 .prog .fl{height:100%;width:0;background:var(--mid);transition:width .25s}
-.btn{font:inherit;font-size:14px;font-weight:600;border-radius:4px;padding:9px 16px;cursor:pointer;border:1px solid var(--blue);background:var(--white);color:var(--blue)}
+.btn{font:inherit;font-size:14px;font-weight:600;border-radius:4px;padding:9px 18px;cursor:pointer;border:1px solid var(--blue);background:var(--white);color:var(--blue)}
 .btn:hover{background:var(--soft)}
 .btn.pri{background:var(--blue);color:var(--white)}
 .btn.pri:hover{background:var(--navy);border-color:var(--navy)}
 .btn.txt{border-color:transparent;color:var(--muted);font-weight:400;padding:9px 6px}
 .btn.txt:hover{background:none;color:var(--text);text-decoration:underline}
 .btn:focus-visible{outline:2px solid var(--mid);outline-offset:2px}
-.done{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:6px;padding:14px 22px;margin:0 0 14px;display:none}
-.done.show{display:block}
-.done h2{margin:0 0 6px;font-size:17px;color:var(--navy)}
-.done p{margin:0 0 6px}
+.btn:disabled{opacity:.6;cursor:default}
+.aviso{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:6px;padding:14px 22px;margin:0 0 14px;display:none}
+.aviso.show{display:block}
+.aviso h2{margin:0 0 6px;font-size:17px;color:var(--navy)}
+.aviso p{margin:0 0 6px}
 footer.ft{max-width:1120px;margin:0 auto;padding:0 24px 110px;font-size:12.5px;color:var(--muted)}
-.saved{font-size:12.5px;color:var(--ok);min-width:110px}
+.saved{font-size:12.5px;color:var(--ok);min-width:110px;text-align:right}
 @media (max-width:860px){
-  .wrap{grid-template-columns:1fr;padding-top:22px}
+  .wrap{grid-template-columns:1fr;padding-top:18px}
   nav.side{display:none}
-  .notes{grid-template-columns:1fr;margin-top:-16px}
   .hero h1{font-size:21px}
-  .q,section.card>header,.resp{padding-left:16px;padding-right:16px}
+  .q,section.card>header{padding-left:16px;padding-right:16px}
   .topbar .who{display:none}
+  .prog{flex-basis:100%;margin-right:0}
 }
 @media print{
   body{background:#fff;font-size:11pt}
-  nav.side,.bar,.addrow,.done,#envio{display:none!important}
-  .wrap{display:block;padding:0 0 0;max-width:none}
+  nav.side,.bar,.addrow,.aviso,.noprint,.sec-n{display:none!important}
+  .step{display:block!important}
+  .wrap{display:block;padding:0;max-width:none}
   .hero{background:#fff;color:#000;border-bottom:2px solid var(--navy)}
   .hero .in{padding:18px 0}
-  .hero h1{color:var(--navy)} .hero .sub,.hero p.lead{color:#333} .hero .eyebrow{color:var(--blue);background:none;border-color:var(--blue)} .chips li{color:#333;background:none;border-color:#bbb} .chips svg{stroke:var(--blue)}
-  .notes{margin:12px 0;padding:0}
-  section.card,.resp{break-inside:auto;border-color:#bbb}
+  .hero h1{color:var(--navy)} .hero p.lead{color:#333} .hero .eyebrow{color:var(--blue);background:none;border-color:var(--blue)} .chips{display:none}
+  section.card{break-inside:auto;border-color:#bbb}
   .q{break-inside:avoid}
   footer.ft{padding:12px 0}
   .topbar .in{padding:8px 0}
@@ -161,25 +158,30 @@ footer.ft{max-width:1120px;margin:0 auto;padding:0 24px 110px;font-size:12.5px;c
 <div class="wrap">
   <nav class="side" aria-label="Secciones"><div class="ttl">Secciones</div><div id="nav"></div></nav>
   <main>
-    <div class="done" id="done" role="status">
-      <h2 id="doneT">Respuestas descargadas</h2>
+    <div class="aviso" id="done" role="status">
+      <h2 id="doneT">Respuestas enviadas</h2>
       <p id="doneP"></p>
     </div>
-    <div class="resp">
-      <h2>Datos de quien responde</h2>
-      <div class="grid">
-        <div class="f"><label for="r_nombre">Nombre</label><input type="text" id="r_nombre" data-key="r_nombre" autocomplete="name"></div>
-        <div class="f"><label for="r_area">Área</label><input type="text" id="r_area" data-key="r_area"></div>
-        <div class="f"><label for="r_puesto">Puesto</label><input type="text" id="r_puesto" data-key="r_puesto" autocomplete="organization-title"></div>
-        <div class="f"><label for="r_correo">Correo</label><input type="email" id="r_correo" data-key="r_correo" autocomplete="email"></div>
-      </div>
-    </div>
     <form id="form" novalidate></form>
-    <section class="card" id="envio">
-      <header><div class="num" aria-hidden="true">&#10003;</div><div><h2>Envío de sus respuestas</h2><p id="finD"></p></div></header>
+    <section class="card step" id="envio">
+      <header><div class="num" aria-hidden="true">&#10003;</div><div><h2 tabindex="-1">Envío de sus respuestas</h2><p id="finD"></p></div></header>
       <div class="q">
+        <div class="lbl">¿Quién responde?</div>
+        <div class="grid">
+          <div class="f"><label for="r_nombre">Nombre</label><input type="text" id="r_nombre" data-key="r_nombre" autocomplete="name"></div>
+          <div class="f"><label for="r_area">Área</label><input type="text" id="r_area" data-key="r_area"></div>
+          <div class="f"><label for="r_puesto">Puesto</label><input type="text" id="r_puesto" data-key="r_puesto" autocomplete="organization-title"></div>
+          <div class="f"><label for="r_correo">Correo</label><input type="email" id="r_correo" data-key="r_correo" autocomplete="email"></div>
+        </div>
+      </div>
+      <div class="q noprint">
         <ul class="pasos" id="finL"></ul>
-        <div class="finb"><button type="button" class="btn pri" id="bSend2">Enviar respuestas</button><button type="button" class="btn" id="bCopy">Descargar una copia</button></div>
+        <div class="finb">
+          <button type="button" class="btn pri" id="bSend2">Enviar respuestas</button>
+          <button type="button" class="btn" id="bCopy">Descargar una copia</button>
+          <button type="button" class="btn" id="bPrint">Imprimir o guardar PDF</button>
+          <button type="button" class="btn txt" id="bClear">Borrar respuestas</button>
+        </div>
       </div>
     </section>
   </main>
@@ -188,9 +190,9 @@ footer.ft{max-width:1120px;margin:0 auto;padding:0 24px 110px;font-size:12.5px;c
 <footer class="ft">Skala + EmTech Institute · La información compartida se utilizará únicamente para preparar la propuesta solicitada por BBVA México y se tratará como confidencial. · Contacto: Nelly Cervantes, <a href="mailto:nelly@skala.global">nelly@skala.global</a></footer>
 
 <div class="bar"><div class="in">
-  <div class="prog"><div class="tx"><span id="pTx">0 de 0 preguntas respondidas</span><span class="saved" id="saved"></span></div><div class="tr"><div class="fl" id="pFl"></div></div></div>
-  <button type="button" class="btn txt" id="bClear">Borrar respuestas</button>
-  <button type="button" class="btn" id="bPrint">Imprimir o guardar PDF</button>
+  <div class="prog"><div class="tx"><span id="pTx"></span><span class="saved" id="saved"></span></div><div class="tr"><div class="fl" id="pFl"></div></div></div>
+  <button type="button" class="btn" id="bPrev">Anterior</button>
+  <button type="button" class="btn pri" id="bNext">Siguiente</button>
   <button type="button" class="btn pri" id="bSend">Enviar respuestas</button>
 </div></div>
 
@@ -200,78 +202,70 @@ footer.ft{max-width:1120px;margin:0 auto;padding:0 24px 110px;font-size:12.5px;c
 // Si se deja vacío, se descarga un archivo con las respuestas para enviarlo por correo.
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzqkksEGhefUGRYYnzks-WoejemtMSQvUy5QcSEJ2G6tWVjJCT8Ee-eT1sn70dHk3cY/exec';
 const CONTACTO = 'nelly@skala.global';
-const STORE = 'bbva_sfsc_solicitud_v1';
+const STORE = 'bbva_sfsc_datarequest_v2';
 
 /* ---------- Contenido ---------- */
-const SN = ['Sí','No','Por definir'];
+// Criterio: cada pregunta se formula de forma directa y se entiende sola; los ejemplos van dentro del campo.
 const SECCIONES = [
-{ id:'s1', t:'Alcance del despliegue', d:'Dimensión de la red y calendario previsto para las siguientes fases.', q:[
-  { id:'1', l:'Sucursales de Banca Comercial que utilizarán Salesforce Financial Services Cloud', type:'group', f:[
-      {id:'total', l:'Sucursales en total', type:'number'},
+{ id:'s1', t:'Alcance del despliegue', d:'La dimensión de la red y el calendario de las siguientes fases.', q:[
+  { id:'1', l:'¿Cuántas sucursales de Banca Comercial utilizarán Salesforce Financial Services Cloud?', type:'group', f:[
+      {id:'total', l:'Sucursales', type:'number'},
       {id:'div', l:'Divisiones', type:'number'},
       {id:'reg', l:'Regiones o zonas', type:'number'} ]},
-  { id:'2', l:'Calendario previsto de las siguientes fases', h:'Una fila por fase u ola. Las fechas pueden ser estimadas.', type:'table', rows:2, add:'Agregar fase',
-    cols:[ {id:'fase', l:'Fase u ola', type:'text', ph:'Ej. Fase 2'}, {id:'amb', l:'Divisiones o regiones', type:'text'}, {id:'suc', l:'Sucursales', type:'number', w:110}, {id:'usr', l:'Usuarios', type:'number', w:110}, {id:"fecha", l:"Inicio estimado", type:"text", ph:"Ej. abril de 2027", w:170} ]},
-  { id:'3', l:'Fecha en la que BBVA desearía iniciar el acompañamiento', type:"text", ph:"Ej. febrero de 2027", w:"m" }
+  { id:'2', l:'¿Cómo está previsto el calendario de las siguientes fases?', type:'table', rows:2, add:'Agregar fase',
+    cols:[ {id:'fase', l:'Fase u ola', type:'text', ph:'Ej. Fase 2'}, {id:'amb', l:'Divisiones o regiones', type:'text'}, {id:'suc', l:'Sucursales', type:'number', w:110}, {id:'usr', l:'Usuarios', type:'number', w:110}, {id:'fecha', l:'Inicio estimado', type:'text', ph:'Ej. abril de 2027', w:170} ]},
+  { id:'3', l:'¿Cuándo desearía BBVA iniciar el acompañamiento?', type:'text', ph:'Ej. febrero de 2027', w:'m' }
 ]},
-{ id:'s2', t:'Usuarios y roles', d:'Población que utilizará la plataforma y perfiles que BBVA desea incluir.', q:[
-  { id:'1', l:'Usuarios por rol', h:'Cifras aproximadas. Puede ajustar los nombres de los roles a la estructura de BBVA.', type:'table', add:'Agregar rol',
+{ id:'s2', t:'Usuarios y roles', d:'Quiénes utilizarán la plataforma en las siguientes fases.', q:[
+  { id:'1', l:'¿Cuántos usuarios hay por rol y cuáles se incluirían en esta etapa?', type:'table', add:'Agregar otro rol',
     fixed:['Ejecutivos y banqueros pyme','Banqueros de empresas','Ejecutivos de otros segmentos','Funciones especializadas','Gerentes de sucursal','Directores regionales o de zona','Directores de división','Áreas centrales de soporte comercial','Mesa de ayuda'],
-    cols:[ {id:'rol', l:'Rol', type:'text'}, {id:'usr', l:'Usuarios', type:'number', w:120}, {id:'alc', l:'¿Se incluye en esta etapa?', type:'select', o:SN, w:190} ]},
-  { id:'2', l:'Promedio de ejecutivos por sucursal', type:'number', w:'s' },
-  { id:'3', l:'Rotación anual aproximada en la red comercial', type:'radio', o:['Menos de 5%','Entre 5% y 10%','Entre 10% y 20%','Más de 20%','No disponible'] }
+    cols:[ {id:'rol', l:'Rol', type:'text', ph:'Nombre del rol'}, {id:'usr', l:'Usuarios (aprox.)', type:'number', w:150}, {id:'alc', l:'Incluir en esta etapa', type:'check', w:170} ]}
 ]},
 { id:'s3', t:'Modelo comercial y funcionalidades', d:'Lo que cambia en la forma de trabajar y lo que la plataforma ya ofrece.', q:[
-  { id:'1', l:'¿La implementación viene acompañada de cambios en el modelo comercial?', h:'Por ejemplo, en la gestión de cartera, la sistemática comercial o las metas.', type:'radio', o:['Sí, cambios relevantes','Ajustes menores','No, el modelo se mantiene','Por definir'], x:'Si lo desea, describa brevemente los cambios' },
-  { id:'2', l:'Funcionalidades disponibles', h:'Marque las que ya operan en el piloto y las previstas para las siguientes fases.', type:'matrix', cols:['En el piloto','Siguientes fases'],
+  { id:'1', l:'¿La implementación viene acompañada de cambios en el modelo comercial?', type:'radio', o:['Sí, cambios relevantes','Ajustes menores','No, el modelo se mantiene','Por definir'], x:'¿Cuáles?', xp:'Ej. gestión de cartera, sistemática comercial, metas' },
+  { id:'2', l:'¿Qué funcionalidades operan ya en el piloto y cuáles llegarán en las siguientes fases?', type:'matrix', cols:['En el piloto','Siguientes fases'],
     rows:['Visión integral del cliente','Gestión de cartera','Oportunidades y seguimiento comercial','Campañas','Agenda y actividades','Tableros y reportes','Referidos entre áreas'], other:true },
-  { id:'3', l:'Herramienta que SFSC sustituye', type:'group', f:[ {id:'nom', l:'Nombre de la herramienta anterior', type:'text'} ] },
-  { id:'4', l:'Situación de la herramienta anterior', type:'radio', o:['Ya fue retirada','Tiene fecha de retiro definida','Convivirá con SFSC por un periodo','Por definir'], x:'Fecha o periodo estimado, si se conoce' },
-  { id:'5', l:'¿Hay procesos en los que hoy se registra información en más de un sistema?', type:'radio', o:['Sí','No','No se ha identificado'], x:'Si la respuesta es sí, indique cuáles' }
+  { id:'3', l:'¿En qué situación está la herramienta que SFSC sustituye?', type:'radio', o:['Ya fue retirada','Tiene fecha de retiro definida','Convivirá con SFSC por un periodo','Por definir'], x:'Herramienta y fecha', xp:'Nombre de la herramienta y fecha estimada de retiro' },
+  { id:'4', l:'¿Hay procesos en los que hoy se registra la misma información en más de un sistema?', type:'radio', o:['Sí','No','No se ha identificado'], x:'¿Cuáles?', xp:'Ej. alta de oportunidades, seguimiento de visitas' }
 ]},
-{ id:'s4', t:'Experiencia del piloto', d:'Punto de partida y aprendizajes que BBVA quiere incorporar.', q:[
-  { id:'1', l:'Alcance del piloto', type:'group', f:[
+{ id:'s4', t:'Experiencia del piloto', d:'El punto de partida y lo aprendido hasta ahora.', q:[
+  { id:'1', l:'¿Cuál es el alcance del piloto?', type:'group', f:[
       {id:'div', l:'División o región', type:'text'},
       {id:'suc', l:'Sucursales', type:'number'},
       {id:'usr', l:'Usuarios', type:'number'},
-      {id:"ini", l:"Inicio", type:"text", ph:"Ej. enero de 2026"} ]},
-  { id:'2', l:'Indicadores de uso con los que BBVA cuenta hoy', type:'checks', o:['Usuarios activos','Frecuencia de acceso','Registros por usuario','Uso por rol o por sucursal','Calidad de la información registrada','Aún no se cuenta con indicadores'] },
-  { id:'3', l:'¿Podrían compartirse estos indicadores en forma agregada?', type:'radio', o:['Sí','Sí, tras el acuerdo de confidencialidad','No'] },
-  { id:'4', l:'Temas que los usuarios han reportado con mayor frecuencia', type:'checks', o:['Accesos y perfiles','Disponibilidad o calidad de los datos','Desempeño de la plataforma','Funcionalidades que aún no están disponibles','Navegación y facilidad de uso','Integración con otros sistemas','Dudas sobre el uso o el proceso'], other:true },
-  { id:'5', l:'Principales aprendizajes del piloto', h:'Lo que funcionó bien y lo que BBVA quisiera hacer distinto en las siguientes fases.', type:'textarea' },
-  { id:'6', l:'Resultados de negocio que BBVA espera impulsar con SFSC', type:'checks', o:['Vinculación de clientes','Venta cruzada','Productividad comercial','Experiencia del cliente','Retención','Calidad de la información comercial'], other:true }
+      {id:'ini', l:'Inicio', type:'text', ph:'Ej. enero de 2026'} ]},
+  { id:'2', l:'¿Con qué indicadores de uso cuenta BBVA hoy?', type:'checks', o:['Usuarios activos','Frecuencia de acceso','Registros por usuario','Uso por rol o por sucursal','Calidad de la información registrada','Aún no se cuenta con indicadores'] },
+  { id:'3', l:'¿Qué temas han reportado los usuarios con mayor frecuencia?', type:'checks', o:['Accesos y perfiles','Disponibilidad o calidad de los datos','Desempeño de la plataforma','Funcionalidades que aún no están disponibles','Navegación y facilidad de uso','Integración con otros sistemas','Dudas sobre el uso o el proceso'], other:true },
+  { id:'4', l:'¿Qué resultados de negocio espera impulsar BBVA con SFSC?', type:'checks', o:['Vinculación de clientes','Venta cruzada','Productividad comercial','Experiencia del cliente','Retención','Calidad de la información comercial'], other:true },
+  { id:'5', l:'¿Cuáles han sido los principales aprendizajes del piloto?', type:'textarea', ph:'Lo que funcionó bien y lo que BBVA quisiera hacer distinto en las siguientes fases' }
 ]},
 { id:'s5', t:'Gestión del cambio y formación', d:'Lo que BBVA ya ha realizado, para darle continuidad.', q:[
-  { id:'1', l:'Acciones de comunicación y gestión del cambio realizadas para SFSC', type:'checks', o:['Comunicados institucionales','Sesiones informativas','Videos o cápsulas','Red de embajadores o champions','Materiales para líderes'], other:true },
-  { id:'2', l:'Formación impartida sobre la plataforma', type:'checks', o:['Presencial','Virtual en vivo','En línea, a ritmo propio','Guías y manuales','Acompañamiento en sucursal'], other:true },
-  { id:'3', l:'Detalle de la formación impartida', type:'group', f:[
-      {id:'dur', l:'Duración aproximada por persona', type:'text', ph:'Ej. 4 horas'},
-      {id:'quien', l:'Impartida por', type:'select', o:['Equipo interno de BBVA','Salesforce','Otro proveedor','Esquema mixto']} ]},
-  { id:'4', l:'Programas recientes de liderazgo y de acompañamiento del cambio', h:'Nombre del programa, niveles que participaron y fecha aproximada.', type:'textarea' },
-  { id:'5', l:'¿Existe una red de champions o agentes de cambio en la red comercial?', type:'radio', o:['Sí, formalmente constituida','Sí, de manera informal','No'], x:'Número aproximado de integrantes, si existe' },
-  { id:'6', l:'Plataforma de aprendizaje y formatos que admite', type:'group', f:[
-      {id:'plat', l:'Plataforma', type:'text', ph:'Ej. Campus BBVA'},
-      {id:'fmt', l:'Formatos admitidos', type:'text', ph:'Ej. SCORM, video, PDF'} ]},
-  { id:'7', l:'Modalidades de formación que BBVA prefiere para las siguientes fases', type:'checks', o:['Presencial en sucursal','Presencial en sede regional','Virtual en vivo','En línea, a ritmo propio','Combinada'] },
-  { id:'8', l:'Disponibilidad de tiempo para la formación', type:'group', f:[
+  { id:'1', l:'¿Qué acciones de comunicación y gestión del cambio se han realizado para SFSC?', type:'checks', o:['Comunicados institucionales','Sesiones informativas','Videos o cápsulas','Red de embajadores o champions','Materiales para líderes'], other:true },
+  { id:'2', l:'¿Cómo se ha impartido la formación sobre la plataforma?', type:'checks', o:['Presencial','Virtual en vivo','En línea, a ritmo propio','Guías y manuales','Acompañamiento en sucursal'], other:true },
+  { id:'3', l:'¿Quién impartió esa formación?', type:'radio', o:['Equipo interno de BBVA','Salesforce','Otro proveedor','Esquema mixto'] },
+  { id:'4', l:'¿Existe una red de champions o agentes de cambio en la red comercial?', type:'radio', o:['Sí, formalmente constituida','Sí, de manera informal','No'], x:'¿Cuántos integrantes?', xp:'Número aproximado' },
+  { id:'5', l:'¿Qué programas recientes de liderazgo o de acompañamiento del cambio debemos tomar como base?', type:'textarea', ph:'Nombre del programa, niveles que participaron y fecha aproximada' },
+  { id:'6', l:'¿Qué modalidades de formación prefiere BBVA para las siguientes fases?', type:'checks', o:['Presencial en sucursal','Presencial en sede regional','Virtual en vivo','En línea, a ritmo propio','Combinada'] },
+  { id:'7', l:'¿Qué plataforma de aprendizaje y qué disponibilidad de tiempo debemos considerar?', type:'group', f:[
+      {id:'plat', l:'Plataforma de aprendizaje', type:'text', ph:'Ej. Campus BBVA'},
       {id:'hrs', l:'Horas al mes por persona', type:'text', ph:'Ej. 3 a 4 horas'},
       {id:'evitar', l:'Periodos a evitar', type:'text', ph:'Ej. cierres de mes, campañas'} ]}
 ]},
-{ id:'s6', t:'Soporte y evolución de la plataforma', d:'Cómo se atienden hoy las solicitudes de los usuarios y cómo evoluciona la herramienta.', q:[
-  { id:'1', l:'Canales por los que el usuario reporta una incidencia o solicitud', type:'checks', o:['Mesa de ayuda','Herramienta de tickets','A través de su gerente','Correo o chat interno','Champions o referentes'], other:true },
-  { id:'2', l:'Tiempo habitual de respuesta a una solicitud', type:'radio', o:['El mismo día','De 2 a 5 días','De 1 a 2 semanas','Más de 2 semanas','Varía según el tipo de solicitud'] },
-  { id:'3', l:'Solicitudes de usuarios recibidas al mes durante el piloto', type:'radio', o:['Menos de 50','Entre 50 y 200','Entre 200 y 500','Más de 500','No disponible'] },
-  { id:'4', l:'Áreas que participan en la priorización de mejoras', type:'checks', o:['Negocio','Arquitectura','Tecnología','Equipo de producto o CRM'], other:true },
-  { id:'5', l:'Equipo interno de Salesforce y ciclo de liberaciones', type:'group', f:[
+{ id:'s6', t:'Soporte y evolución de la plataforma', d:'Cómo se atienden hoy las solicitudes de los usuarios.', q:[
+  { id:'1', l:'¿Por qué canales reporta el usuario una incidencia o solicitud?', type:'checks', o:['Mesa de ayuda','Herramienta de tickets','A través de su gerente','Correo o chat interno','Champions o referentes'], other:true },
+  { id:'2', l:'¿Cuánto tarda habitualmente la respuesta a una solicitud?', type:'radio', o:['El mismo día','De 2 a 5 días','De 1 a 2 semanas','Más de 2 semanas','Varía según el tipo'] },
+  { id:'3', l:'¿Cuántas solicitudes de usuarios se recibieron al mes durante el piloto?', type:'radio', o:['Menos de 50','Entre 50 y 200','Entre 200 y 500','Más de 500','No disponible'] },
+  { id:'4', l:'¿Qué áreas participan en la priorización de mejoras?', type:'checks', o:['Negocio','Arquitectura','Tecnología','Equipo de producto o CRM'], other:true },
+  { id:'5', l:'¿Cómo es el equipo interno de Salesforce y cada cuánto libera cambios?', type:'group', f:[
       {id:'tam', l:'Personas en el equipo', type:'number'},
       {id:'ciclo', l:'Frecuencia de liberaciones', type:'select', o:['Semanal','Quincenal','Mensual','Trimestral','Otra']} ]},
-  { id:'6', l:'Lineamientos para la participación de equipos externos', h:'Accesos, ambientes y aprobaciones que deban considerarse.', type:'textarea' }
+  { id:'6', l:'¿Qué lineamientos aplican a la participación de equipos externos?', type:'textarea', ph:'Accesos, ambientes y aprobaciones que deban considerarse' }
 ]},
-{ id:'s7', t:'Proceso y contacto', d:'Para preparar la propuesta en los tiempos y en el formato que BBVA requiere.', q:[
-  { id:'1', l:'Áreas que participan en la decisión', type:'checks', o:['Banca Comercial','Talento y Cultura','Tecnología y Arquitectura','Compras'], other:true },
-  { id:'2', l:'Fechas clave y requisitos del proceso de contratación', h:'Fechas de la licitación, formato de la propuesta y documentación requerida.', type:'textarea' },
-  { id:'3', l:'Persona de contacto para aclaraciones', type:'group', f:[ {id:'nom', l:'Nombre', type:'text'}, {id:'mail', l:'Correo', type:'email'} ] },
-  { id:'4', l:'Comentarios adicionales', type:'textarea' }
+{ id:'s7', t:'Proceso y contacto', d:'Para preparar la propuesta en los tiempos y el formato que BBVA requiere.', q:[
+  { id:'1', l:'¿Qué áreas participan en la decisión?', type:'checks', o:['Banca Comercial','Talento y Cultura','Tecnología y Arquitectura','Compras'], other:true },
+  { id:'2', l:'¿Qué fechas y requisitos del proceso de contratación debemos considerar?', type:'textarea', ph:'Fechas de la licitación, formato de la propuesta y documentación requerida' },
+  { id:'3', l:'¿A quién podemos contactar para aclaraciones?', type:'group', f:[ {id:'nom', l:'Nombre', type:'text'}, {id:'mail', l:'Correo', type:'email'} ] },
+  { id:'4', l:'¿Desea agregar algún comentario?', type:'textarea' }
 ]}
 ];
 
@@ -288,6 +282,7 @@ function h(tag, attrs, kids){
 }
 let state = {};
 try { state = JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch (e) { state = {}; }
+function save(){ try { localStorage.setItem(STORE, JSON.stringify(state)); return true; } catch (e) { return false; } }
 function persist(){
   document.querySelectorAll('[data-key]').forEach(el => {
     const k = el.dataset.key;
@@ -295,7 +290,7 @@ function persist(){
     else if (el.type === 'radio') { if (el.checked) state[k] = el.value; }
     else state[k] = el.value;
   });
-  try { localStorage.setItem(STORE, JSON.stringify(state)); flash('Avance guardado'); } catch (e) {}
+  if (save()) flash('Avance guardado');
 }
 let ft;
 function flash(t){ const s = document.getElementById('saved'); s.textContent = t; clearTimeout(ft); ft = setTimeout(() => s.textContent = '', 1800); }
@@ -306,36 +301,39 @@ function input(type, key, o){
     (o.o || []).forEach(v => s.appendChild(h('option', {value:v, text:v})));
     return s;
   }
-  if (type === 'textarea') return h('textarea', {'data-key':key, id:o.id, 'aria-label':o.aria, rows:2});
+  if (type === 'textarea') return h('textarea', {'data-key':key, id:o.id, 'aria-label':o.aria, rows:2, placeholder:o.ph});
+  if (type === 'check') return h('input', {type:'checkbox', 'data-key':key, id:o.id, 'aria-label':o.aria});
   return h('input', {type:type, 'data-key':key, id:o.id, placeholder:o.ph, 'aria-label':o.aria, min: type === 'number' ? 0 : undefined, inputmode: type === 'number' ? 'numeric' : undefined});
 }
 
 /* ---------- Construcción del formulario ---------- */
 const form = document.getElementById('form'), nav = document.getElementById('nav');
-function tableRow(q, key, i, label){
-  const tr = h('tr');
+form.addEventListener('submit', e => e.preventDefault());
+function tableRow(q, key, i){
+  const fijo = q.fixed && i < q.fixed.length, tr = h('tr');
   q.cols.forEach((c, ci) => {
-    const el = input(c.type, key + '__r' + i + '__' + c.id, {o:c.o, ph:c.ph, aria:c.l + ', fila ' + (i + 1)});
-    if (ci === 0 && label !== undefined && !(key + '__r' + i + '__' + c.id in state)) el.value = label;
-    const td = h('td', null, [el]);
+    let td;
+    if (ci === 0 && fijo) td = h('td', {class:'rl', text:q.fixed[i]});
+    else {
+      const nombre = fijo ? q.fixed[i] : 'fila ' + (i + 1);
+      td = h('td', {class: c.type === 'check' ? 'c' : null}, [input(c.type, key + '__r' + i + '__' + c.id, {o:c.o, ph:c.ph, aria:c.l + ': ' + nombre})]);
+    }
     if (c.w) td.style.width = c.w + 'px';
     tr.appendChild(td);
   });
   return tr;
 }
 SECCIONES.forEach((s, si) => {
-  const card = h('section', {class:'card', id:s.id});
-  card.appendChild(h('header', null, [h('div', {class:'num', text:String(si + 1)}), h('div', null, [h('h2', {text:s.t}), h('p', {text:s.d})])]));
+  const card = h('section', {class:'card step', id:s.id});
+  card.appendChild(h('header', null, [h('div', {class:'num', text:String(si + 1)}), h('div', null, [h('h2', {text:s.t, tabindex:'-1'}), h('p', {text:s.d})]), h('div', {class:'sec-n', text:'Sección ' + (si + 1) + ' de ' + SECCIONES.length})]));
   s.q.forEach(q => {
     const key = s.id + '_' + q.id, num = (si + 1) + '.' + q.id, id = 'f_' + key;
     const box = h('div', {class:'q', 'data-q':key});
-    const simple = ['text','number','month','date','email','textarea'].includes(q.type);
-    const lbl = h(simple ? 'label' : 'div', {class:'lbl', for: simple ? id : undefined, id:'l_' + key}, [h('span', {class:'k', text:num}), q.l]);
-    box.appendChild(lbl);
-    if (q.h) box.appendChild(h('p', {class:'help', text:q.h}));
+    const simple = ['text','number','email','textarea'].includes(q.type);
+    box.appendChild(h(simple ? 'label' : 'div', {class:'lbl', for: simple ? id : undefined, id:'l_' + key}, [h('span', {class:'k', text:num}), q.l]));
     const ctl = h('div', {class:'ctl'});
     if (simple){
-      const el = input(q.type, key, {id:id});
+      const el = input(q.type, key, {id:id, ph:q.ph});
       if (q.w) el.classList.add('w-' + q.w);
       ctl.appendChild(el);
     } else if (q.type === 'radio' || q.type === 'checks'){
@@ -347,15 +345,15 @@ SECCIONES.forEach((s, si) => {
         g.appendChild(h('label', {class:'opt'}, [inp, o]));
       });
       ctl.appendChild(g);
-      if (q.other) ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_o', text:'Otro (especifique)'}), Object.assign(input('text', key + '__otro', {id:id + '_o'}), {className:'w-m'})]));
-      if (q.x) ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_x', text:q.x}), input('text', key + '__nota', {id:id + '_x'})]));
+      if (q.other) ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_o', text:'Otro'}), input('text', key + '__otro', {id:id + '_o', ph:'Especifique'})]));
+      if (q.x) ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_x', text:q.x}), input('text', key + '__nota', {id:id + '_x', ph:q.xp})]));
     } else if (q.type === 'group'){
       const g = h('div', {class:'grid'});
       q.f.forEach(f => g.appendChild(h('div', {class:'f'}, [h('label', {for:id + '_' + f.id, text:f.l}), input(f.type, key + '__' + f.id, {id:id + '_' + f.id, o:f.o, ph:f.ph})])));
       ctl.appendChild(g);
     } else if (q.type === 'matrix'){
-      const t = h('table', {class:'t'}), hr = h('tr', null, [h('th', {text:''})]);
-      q.cols.forEach(c => hr.appendChild(h('th', {text:c, style:'text-align:center'})));
+      const t = h('table', {class:'t'}), hr = h('tr', null, [h('th', {text:'Funcionalidad'})]);
+      q.cols.forEach(c => hr.appendChild(h('th', {text:c, class:'c'})));
       t.appendChild(h('thead', null, [hr]));
       const tb = h('tbody');
       q.rows.forEach((r, ri) => {
@@ -365,15 +363,15 @@ SECCIONES.forEach((s, si) => {
       });
       t.appendChild(tb);
       ctl.appendChild(h('div', {class:'tblwrap'}, [t]));
-      if (q.other) ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_o', text:'Otras funcionalidades (especifique)'}), input('text', key + '__otro', {id:id + '_o'})]));
+      if (q.other) ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_o', text:'Otras'}), input('text', key + '__otro', {id:id + '_o', ph:'Especifique'})]));
     } else if (q.type === 'table'){
       const t = h('table', {class:'t'}), hr = h('tr');
-      q.cols.forEach(c => hr.appendChild(h('th', {text:c.l})));
+      q.cols.forEach(c => hr.appendChild(h('th', {text:c.l, class: c.type === 'check' ? 'c' : null})));
       t.appendChild(h('thead', null, [hr]));
       const tb = h('tbody');
       const base = q.fixed ? q.fixed.length : q.rows;
       const n = Math.max(base, Number(state[key + '__n']) || 0);
-      for (let i = 0; i < n; i++) tb.appendChild(tableRow(q, key, i, q.fixed ? q.fixed[i] : undefined));
+      for (let i = 0; i < n; i++) tb.appendChild(tableRow(q, key, i));
       t.appendChild(tb);
       ctl.appendChild(h('div', {class:'tblwrap'}, [t]));
       const cnt = h('input', {type:'hidden', 'data-key':key + '__n', value:String(n)});
@@ -387,7 +385,7 @@ SECCIONES.forEach((s, si) => {
   form.appendChild(card);
   nav.appendChild(h('a', {href:'#' + s.id, 'data-s':s.id}, [h('span', {class:'n', text:String(si + 1)}), h('span', {text:s.t})]));
 });
-nav.appendChild(h("a", {href:"#envio"}, [h("span", {class:"n", text:"✓"}), h("span", {text:"Envío de sus respuestas"})]));
+nav.appendChild(h('a', {href:'#envio', 'data-s':'envio'}, [h('span', {class:'n', text:'✓'}), h('span', {text:'Envío de sus respuestas'})]));
 
 /* ---------- Restaurar respuestas ---------- */
 document.querySelectorAll('[data-key]').forEach(el => {
@@ -399,17 +397,14 @@ document.querySelectorAll('[data-key]').forEach(el => {
 
 /* ---------- Avance ---------- */
 function answered(box){
-  const q = findQ(box.dataset.q);
   return [...box.querySelectorAll('[data-key]')].some(el => {
     if (el.type === 'hidden') return false;
     if (el.type === 'checkbox' || el.type === 'radio') return el.checked;
-    if (q && q.fixed && /__rol$/.test(el.dataset.key)) return false; // nombres de rol precargados
     return el.value.trim() !== '';
   });
 }
-function findQ(key){ for (const s of SECCIONES) for (const q of s.q) if (s.id + '_' + q.id === key) return q; return null; }
 function refresh(){
-  const boxes = [...document.querySelectorAll("#form .q")], done = boxes.filter(answered).length;
+  const boxes = [...document.querySelectorAll('#form .q')], done = boxes.filter(answered).length;
   document.getElementById('pTx').textContent = done + ' de ' + boxes.length + ' preguntas respondidas';
   document.getElementById('pFl').style.width = (boxes.length ? Math.round(done / boxes.length * 100) : 0) + '%';
   SECCIONES.forEach(s => {
@@ -420,6 +415,30 @@ function refresh(){
 document.addEventListener('input', () => { persist(); refresh(); });
 document.addEventListener('change', () => { persist(); refresh(); });
 refresh();
+
+/* ---------- Una sección por pantalla ---------- */
+const steps = [...document.querySelectorAll('.step')], links = [...nav.querySelectorAll('a')];
+const bPrev = document.getElementById('bPrev'), bNext = document.getElementById('bNext'), bSend = document.getElementById('bSend');
+let cur = 0;
+function go(i, mover){
+  cur = Math.max(0, Math.min(steps.length - 1, i));
+  const ultimo = cur === steps.length - 1;
+  steps.forEach((s, k) => s.classList.toggle('on', k === cur));
+  links.forEach((a, k) => { a.classList.toggle('cur', k === cur); if (k === cur) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current'); });
+  bPrev.style.visibility = cur === 0 ? 'hidden' : 'visible';
+  bNext.style.display = ultimo ? 'none' : '';
+  bSend.style.display = ultimo ? '' : 'none';
+  bNext.textContent = cur === steps.length - 2 ? 'Continuar al envío' : 'Siguiente';
+  state.__step = cur; save();
+  if (mover){
+    window.scrollTo(0, Math.max(0, document.querySelector('.wrap').offsetTop - 8));
+    const t = steps[cur].querySelector('h2'); if (t) t.focus({preventScroll:true});
+  }
+}
+links.forEach((a, k) => a.addEventListener('click', e => { e.preventDefault(); go(k, true); }));
+bPrev.addEventListener('click', () => go(cur - 1, true));
+bNext.addEventListener('click', () => go(cur + 1, true));
+go(Number(state.__step) || 0, false);
 
 /* ---------- Exportación ---------- */
 function val(k){ const el = document.querySelector('[data-key="' + k + '"]'); return el ? (el.type === 'checkbox' ? el.checked : el.value.trim()) : ''; }
@@ -441,8 +460,10 @@ function collect(){
     } else if (q.type === 'table'){
       const n = Number(val(key + '__n')) || 0;
       for (let i = 0; i < n; i++){
-        const cells = q.cols.map(c => val(key + '__r' + i + '__' + c.id));
-        if (cells.slice(1).some(Boolean) || (!q.fixed && cells[0])) push(q.l + ' — ' + (cells[0] || 'Fila ' + (i + 1)), q.cols.slice(1).map((c, ci) => cells[ci + 1] ? c.l + ': ' + cells[ci + 1] : '').filter(Boolean).join(' | '));
+        const fijo = q.fixed && i < q.fixed.length;
+        const nombre = fijo ? q.fixed[i] : val(key + '__r' + i + '__' + q.cols[0].id);
+        const resto = q.cols.slice(1).map(c => { const v = val(key + '__r' + i + '__' + c.id); return c.type === 'check' ? (v ? c.l + ': Sí' : '') : (v ? c.l + ': ' + v : ''); }).filter(Boolean);
+        if (resto.length || (!fijo && nombre)) push(q.l + ' — ' + (nombre || 'Fila ' + (i + 1)), resto.join(' | '));
       }
     } else push(q.l, val(key));
   }));
@@ -462,8 +483,9 @@ function download(){
 function showDone(t, p){
   const d = document.getElementById('done'); document.getElementById('doneT').textContent = t;
   const P = document.getElementById('doneP'); P.textContent = ''; p.forEach(x => P.appendChild(x));
-  d.classList.add('show'); d.scrollIntoView({behavior:'smooth', block:'start'});
+  d.classList.add('show'); window.scrollTo(0, Math.max(0, document.querySelector('.wrap').offsetTop - 8));
 }
+
 /* ---------- Envío ---------- */
 const EN_LINEA = !!ENDPOINT;
 const MAILTO = 'mailto:' + CONTACTO
@@ -475,22 +497,19 @@ function botonCorreo(){ return h('a', {href:MAILTO, class:'btn pri mailbtn', tex
 const TX = EN_LINEA ? {
   btn: 'Enviar respuestas',
   d: 'Sus respuestas llegan directamente al equipo de Skala y EmTech Institute.',
-  l: [['Al seleccionar «Enviar respuestas», la información se registra de inmediato con nuestro equipo. No es necesario adjuntar ni enviar ningún archivo por correo.'],
-      ['Verá en pantalla la confirmación del envío.'],
-      ['Puede enviar el formulario más de una vez, por ejemplo si lo completan varias áreas; consideraremos la versión más reciente de cada respuesta.'],
-      ['Si desea conservar una copia, utilice «Descargar una copia» o «Imprimir o guardar PDF».'],
+  l: [['Al enviar, la información se registra de inmediato con nuestro equipo; no es necesario mandar ningún archivo por correo.'],
+      ['Puede enviar el formulario más de una vez, por ejemplo si lo completan varias áreas; consideraremos la versión más reciente.'],
       ['Para cualquier duda, puede escribir a ', correo, '.']]
 } : {
   btn: 'Descargar respuestas',
   d: 'El envío se completa por correo electrónico, con el archivo que genera este formulario.',
-  l: [['Al seleccionar «Descargar respuestas» se guardará en su equipo un archivo con la información capturada.'],
-      ['Para completar el envío, adjunte ese archivo en un correo dirigido a ', correo, '. Al hacer clic en la dirección se abre el mensaje, con el destinatario y el asunto ya indicados.'],
-      ['Si lo prefiere, puede utilizar «Imprimir o guardar PDF» y enviar el documento por el mismo medio.']]
+  l: [['Al descargar, se guardará en su equipo un archivo con la información capturada.'],
+      ['Para completar el envío, adjunte ese archivo en un correo dirigido a ', correo, '. Al hacer clic en la dirección se abre el mensaje, con el destinatario y el asunto ya indicados.']]
 };
 document.getElementById('finD').textContent = TX.d;
 TX.l.forEach(parts => document.getElementById('finL').appendChild(h('li', null, parts.map(p => typeof p === 'function' ? p() : tx(p)))));
 document.querySelectorAll('footer.ft a').forEach(a => { a.href = MAILTO; });
-const sendBtns = [document.getElementById('bSend'), document.getElementById('bSend2')];
+const sendBtns = [bSend, document.getElementById('bSend2')];
 function setBtns(t, off){ sendBtns.forEach(b => { b.textContent = t; b.disabled = off; }); }
 setBtns(TX.btn, false);
 if (!EN_LINEA) document.getElementById('bCopy').style.display = 'none';
