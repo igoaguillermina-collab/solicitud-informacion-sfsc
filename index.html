@@ -75,6 +75,7 @@ table.t td.c{text-align:center}
 table.t input,table.t select{padding:6px 8px;font-size:14px}
 .addrow{margin-top:8px;font:inherit;font-size:13.5px;background:none;border:1px dashed var(--line2);color:var(--blue);border-radius:4px;padding:6px 12px;cursor:pointer}
 .addrow:hover{background:var(--soft)}
+.mailrow{margin-top:12px}a.mailbtn{display:inline-block;text-decoration:none}
 .pasos{margin:0 0 16px;padding-left:20px}.pasos li{margin:5px 0}.finb{display:flex;gap:10px;flex-wrap:wrap}.btn:disabled{opacity:.6;cursor:default}
 .resp{background:var(--white);border:1px solid var(--line);border-radius:6px;margin:0 0 22px;padding:18px 24px}
 .resp h2{margin:0 0 12px;font-size:15px;color:var(--navy)}
@@ -457,28 +458,37 @@ function showDone(t, p){
 }
 /* ---------- Envío ---------- */
 const EN_LINEA = !!ENDPOINT;
+const MAILTO = 'mailto:' + CONTACTO
+  + '?subject=' + encodeURIComponent('Solicitud de información SFSC – respuestas de BBVA')
+  + '&body=' + encodeURIComponent('Estimada Nelly:\n\nAdjunto el archivo con nuestras respuestas a la solicitud de información.\n\nSaludos,');
+const tx = s => document.createTextNode(s);
+function correo(){ return h('a', {href:MAILTO, text:CONTACTO}); }
+function botonCorreo(){ return h('a', {href:MAILTO, class:'btn pri mailbtn', text:'Abrir correo para ' + CONTACTO}); }
 const TX = EN_LINEA ? {
   btn: 'Enviar respuestas',
   d: 'Sus respuestas llegan directamente al equipo de Skala y EmTech Institute.',
-  l: ['Al seleccionar «Enviar respuestas», la información se registra de inmediato con nuestro equipo. No es necesario adjuntar ni enviar ningún archivo por correo.',
-      'Verá en pantalla la confirmación del envío.',
-      'Puede enviar el formulario más de una vez, por ejemplo si lo completan varias áreas; consideraremos la versión más reciente de cada respuesta.',
-      'Si desea conservar una copia, utilice «Descargar una copia» o «Imprimir o guardar PDF».']
+  l: [['Al seleccionar «Enviar respuestas», la información se registra de inmediato con nuestro equipo. No es necesario adjuntar ni enviar ningún archivo por correo.'],
+      ['Verá en pantalla la confirmación del envío.'],
+      ['Puede enviar el formulario más de una vez, por ejemplo si lo completan varias áreas; consideraremos la versión más reciente de cada respuesta.'],
+      ['Si desea conservar una copia, utilice «Descargar una copia» o «Imprimir o guardar PDF».'],
+      ['Para cualquier duda, puede escribir a ', correo, '.']]
 } : {
   btn: 'Descargar respuestas',
   d: 'El envío se completa por correo electrónico, con el archivo que genera este formulario.',
-  l: ['Al seleccionar «Descargar respuestas» se guardará en su equipo un archivo con la información capturada.',
-      'Para completar el envío, adjunte ese archivo en un correo dirigido a ' + CONTACTO + '.',
-      'Si lo prefiere, puede utilizar «Imprimir o guardar PDF» y enviar el documento por el mismo medio.']
+  l: [['Al seleccionar «Descargar respuestas» se guardará en su equipo un archivo con la información capturada.'],
+      ['Para completar el envío, adjunte ese archivo en un correo dirigido a ', correo, '. Al hacer clic en la dirección se abre el mensaje, con el destinatario y el asunto ya indicados.'],
+      ['Si lo prefiere, puede utilizar «Imprimir o guardar PDF» y enviar el documento por el mismo medio.']]
 };
 document.getElementById('finD').textContent = TX.d;
-TX.l.forEach(t => document.getElementById('finL').appendChild(h('li', {text:t})));
+TX.l.forEach(parts => document.getElementById('finL').appendChild(h('li', null, parts.map(p => typeof p === 'function' ? p() : tx(p)))));
+document.querySelectorAll('footer.ft a').forEach(a => { a.href = MAILTO; });
 const sendBtns = [document.getElementById('bSend'), document.getElementById('bSend2')];
 function setBtns(t, off){ sendBtns.forEach(b => { b.textContent = t; b.disabled = off; }); }
 setBtns(TX.btn, false);
 if (!EN_LINEA) document.getElementById('bCopy').style.display = 'none';
-function correo(){ return h('a', {href:'mailto:' + CONTACTO + '?subject=' + encodeURIComponent('Solicitud de información SFSC – respuestas de BBVA'), text:CONTACTO}); }
-const tx = s => document.createTextNode(s);
+function avisoCorreo(intro){
+  return [tx(intro + ' Para completar el envío, adjúntelo en un correo dirigido a '), correo(), tx('. El botón abre el mensaje con el destinatario y el asunto ya indicados; solo falta adjuntar el archivo descargado.'), h('div', {class:'mailrow'}, [botonCorreo()])];
+}
 let enviando = false;
 async function enviar(){
   if (enviando) return;
@@ -490,13 +500,13 @@ async function enviar(){
       showDone('Respuestas enviadas', [tx('Gracias. Su información quedó registrada con el equipo de Skala y EmTech Institute; no es necesario enviar nada más. Nos pondremos en contacto para los siguientes pasos.')]);
     } catch (e) {
       download();
-      showDone('No fue posible completar el envío en línea', [tx('Es probable que su red no permita la conexión. Se descargó un archivo con sus respuestas; para completar el envío, adjúntelo en un correo dirigido a '), correo(), tx('.')]);
+      showDone('No fue posible completar el envío en línea', avisoCorreo('Es probable que su red no permita la conexión. Se descargó un archivo con sus respuestas.'));
     }
     enviando = false; setBtns(TX.btn, false);
     return;
   }
   download();
-  showDone('Respuestas descargadas', [tx('Se guardó en su equipo un archivo con sus respuestas. Para completar el envío, adjúntelo en un correo dirigido a '), correo(), tx('. Gracias por su tiempo.')]);
+  showDone('Respuestas descargadas', avisoCorreo('Se guardó en su equipo un archivo con sus respuestas.'));
 }
 sendBtns.forEach(b => b.addEventListener('click', enviar));
 document.getElementById('bCopy').addEventListener('click', download);
