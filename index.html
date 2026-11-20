@@ -75,6 +75,7 @@ input[type=checkbox],input[type=radio]{accent-color:var(--blue);width:16px;heigh
 .extra{margin-top:9px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .extra label{font-size:13px;color:var(--muted);white-space:nowrap}
 .extra input{flex:1 1 240px;max-width:560px}
+.extra select{flex:0 1 280px;width:auto;max-width:100%}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px 14px}
 .grid .f label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:3px}
 .q .w-m{max-width:360px}
@@ -263,7 +264,7 @@ footer.ft{max-width:1120px;margin:0 auto;padding:0 24px 110px;font-size:12.5px;c
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzqkksEGhefUGRYYnzks-WoejemtMSQvUy5QcSEJ2G6tWVjJCT8Ee-eT1sn70dHk3cY/exec';
 const EN_LINEA = !!ENDPOINT;
 const CONTACTO = 'nelly@skala.global';
-const STORE = 'bbva_sfsc_datarequest_v2';
+const STORE = 'bbva_sfsc_datarequest_v3';
 let sucio = false;      // hay cambios que aún no se guardan con el equipo
 let timer = null;
 
@@ -271,65 +272,59 @@ let timer = null;
 // Criterio: cada pregunta se formula de forma directa y se entiende sola; los ejemplos van dentro del campo.
 // req:true = indispensable (se marca con * y se exige para el envío final).
 const SECCIONES = [
-{ id:'s1', t:'Alcance del despliegue', d:'La dimensión de la red y el calendario de las siguientes fases.', q:[
-  { id:'1', req:true, l:'¿Cuántas sucursales de Banca Comercial utilizarán Salesforce Financial Services Cloud?', type:'group', f:[
-      {id:'total', l:'Sucursales', type:'number'},
-      {id:'div', l:'Divisiones', type:'number'},
-      {id:'reg', l:'Regiones o zonas', type:'number'} ]},
-  { id:'2', req:true, l:'¿Cómo está previsto el calendario de las siguientes fases?', type:'table', rows:2, add:'Agregar fase',
-    cols:[ {id:'fase', l:'Fase u ola', type:'text', ph:'Ej. Fase 2'}, {id:'amb', l:'Divisiones o regiones', type:'text'}, {id:'suc', l:'Sucursales', type:'number', w:110}, {id:'usr', l:'Usuarios', type:'number', w:110}, {id:'fecha', l:'Inicio estimado', type:'text', ph:'Ej. abril de 2027', w:170} ]},
-  { id:'3', l:'¿Cuándo desearía BBVA iniciar el acompañamiento?', type:'text', ph:'Ej. febrero de 2027', w:'m' }
+{ id:'s1', t:'Alcance y calendario del despliegue', d:'La dimensión de la red y el calendario de las siguientes fases.', q:[
+  { id:'1', req:true, l:'¿Cuántas sucursales y cuántos usuarios de Banca Comercial utilizarán Salesforce Financial Services Cloud al completar el despliegue?', type:'group', f:[
+      {id:'suc', l:'Sucursales', type:'number'},
+      {id:'usr', l:'Usuarios', type:'number'} ]},
+  { id:'2', req:true, l:'¿Qué divisiones entran en cada una de las siguientes fases y en qué fechas?', type:'table', rows:2, add:'Agregar fase',
+    cols:[ {id:'fase', l:'Fase u ola', type:'text', ph:'Ej. Fase 2'}, {id:'amb', l:'Divisiones', type:'text'}, {id:'suc', l:'Sucursales', type:'number', w:110}, {id:'usr', l:'Usuarios', type:'number', w:110}, {id:'fecha', l:'Inicio estimado', type:'text', ph:'Ej. abril de 2027', w:170} ]}
 ]},
-{ id:'s2', t:'Usuarios y roles', d:'Quiénes utilizarán la plataforma en las siguientes fases.', q:[
+{ id:'s2', t:'Usuarios y condiciones de uso', d:'Quiénes utilizarán la plataforma en las siguientes fases y con qué condiciones.', q:[
   { id:'1', req:true, l:'¿Cuántos usuarios hay por rol y cuáles se incluirían en esta etapa?', type:'table', add:'Agregar otro rol',
     fixed:['Ejecutivos y banqueros pyme','Banqueros de empresas','Ejecutivos de otros segmentos','Funciones especializadas','Gerentes de sucursal','Directores regionales o de zona','Directores de división','Áreas centrales de soporte comercial','Mesa de ayuda'],
-    cols:[ {id:'rol', l:'Rol', type:'text', ph:'Nombre del rol'}, {id:'usr', l:'Usuarios (aprox.)', type:'number', w:150}, {id:'alc', l:'Incluir en esta etapa', type:'check', w:170} ]}
+    cols:[ {id:'rol', l:'Rol', type:'text', ph:'Nombre del rol'}, {id:'usr', l:'Usuarios (aprox.)', type:'number', w:150}, {id:'alc', l:'Incluir en esta etapa', type:'check', w:170} ]},
+  { id:'2', req:true, l:'¿Los usuarios de las siguientes fases ya cuentan con el equipo y los accesos necesarios?', type:'radio', o:['Sí, todos','Una parte','Aún no','Por definir'] }
 ]},
 { id:'s3', t:'Modelo comercial y funcionalidades', d:'Lo que cambia en la forma de trabajar y lo que la plataforma ya ofrece.', q:[
   { id:'1', req:true, l:'¿La implementación viene acompañada de cambios en el modelo comercial?', type:'radio', o:['Sí, cambios relevantes','Ajustes menores','No, el modelo se mantiene','Por definir'], x:'¿Cuáles?', xp:'Ej. gestión de cartera, sistemática comercial, metas' },
   { id:'2', req:true, l:'¿Qué funcionalidades operan ya en el piloto y cuáles llegarán en las siguientes fases?', type:'matrix', cols:['En el piloto','Siguientes fases'],
     rows:['Visión integral del cliente','Gestión de cartera','Oportunidades y seguimiento comercial','Campañas','Agenda y actividades','Tableros y reportes','Referidos entre áreas'], other:true },
-  { id:'3', req:true, l:'¿En qué situación está la herramienta que SFSC sustituye?', type:'radio', o:['Ya fue retirada','Tiene fecha de retiro definida','Convivirá con SFSC por un periodo','Por definir'], x:'Herramienta y fecha', xp:'Nombre de la herramienta y fecha estimada de retiro' },
-  { id:'4', l:'¿Hay procesos en los que hoy se registra la misma información en más de un sistema?', type:'radio', o:['Sí','No','No se ha identificado'], x:'¿Cuáles?', xp:'Ej. alta de oportunidades, seguimiento de visitas' }
+  { id:'3', l:'¿Cuándo está previsto retirar la herramienta anterior?', type:'radio', o:['Ya tiene fecha','Cuando SFSC se estabilice, sin fecha definida','Por definir'], x:'Fecha estimada', xp:'Ej. segundo semestre de 2027' }
 ]},
-{ id:'s4', t:'Experiencia del piloto', d:'El punto de partida y lo aprendido hasta ahora.', q:[
-  { id:'1', req:true, l:'¿Cuál es el alcance del piloto?', type:'group', f:[
-      {id:'div', l:'División o región', type:'text'},
-      {id:'suc', l:'Sucursales', type:'number'},
-      {id:'usr', l:'Usuarios', type:'number'},
-      {id:'ini', l:'Inicio', type:'text', ph:'Ej. enero de 2026'} ]},
-  { id:'2', l:'¿Con qué indicadores de uso cuenta BBVA hoy?', type:'checks', o:['Usuarios activos','Frecuencia de acceso','Registros por usuario','Uso por rol o por sucursal','Calidad de la información registrada','Aún no se cuenta con indicadores'] },
-  { id:'3', l:'¿Qué temas han reportado los usuarios con mayor frecuencia?', type:'checks', o:['Accesos y perfiles','Disponibilidad o calidad de los datos','Desempeño de la plataforma','Funcionalidades que aún no están disponibles','Navegación y facilidad de uso','Integración con otros sistemas','Dudas sobre el uso o el proceso'], other:true },
-  { id:'4', l:'¿Qué resultados de negocio espera impulsar BBVA con SFSC?', type:'checks', o:['Vinculación de clientes','Venta cruzada','Productividad comercial','Experiencia del cliente','Retención','Calidad de la información comercial'], other:true },
-  { id:'5', req:true, l:'¿Cuáles han sido los principales aprendizajes del piloto?', type:'textarea', ph:'Lo que funcionó bien y lo que BBVA quisiera hacer distinto en las siguientes fases' }
+{ id:'s4', t:'Experiencia del piloto', d:'Lo aprendido hasta ahora, como punto de partida.', q:[
+  { id:'1', req:true, l:'De las áreas de oportunidad que dejó el piloto, ¿cuál pesa más de cara a las siguientes fases?', type:'radio', o:['La comunicación de la iniciativa','La implementación','La agilidad para responder a los usuarios'], x:'¿Por qué?', xp:'Lo que BBVA quisiera hacer distinto en las siguientes fases' },
+  { id:'2', l:'¿Con qué indicadores de uso cuenta BBVA y podrían compartirse en forma agregada?', type:'checks', o:['Usuarios activos','Frecuencia de acceso','Registros por usuario','Uso por rol o por sucursal','Aún no se cuenta con indicadores'],
+    s:{l:'¿Podrían compartirse?', o:['Sí','Tras el acuerdo de confidencialidad','No']} },
+  { id:'3', l:'¿Qué temas han reportado los usuarios con mayor frecuencia?', type:'checks', o:['Accesos y perfiles','Disponibilidad o calidad de los datos','Desempeño de la plataforma','Funcionalidades que aún no están disponibles','Navegación y facilidad de uso','Integración con otros sistemas','Dudas sobre el uso o el proceso'], other:true }
 ]},
-{ id:'s5', t:'Gestión del cambio y formación', d:'Lo que BBVA ya ha realizado, para darle continuidad.', q:[
-  { id:'1', l:'¿Qué acciones de comunicación y gestión del cambio se han realizado para SFSC?', type:'checks', o:['Comunicados institucionales','Sesiones informativas','Videos o cápsulas','Red de embajadores o champions','Materiales para líderes'], other:true },
-  { id:'2', req:true, l:'¿Cómo se ha impartido la formación sobre la plataforma?', type:'checks', o:['Presencial','Virtual en vivo','En línea, a ritmo propio','Guías y manuales','Acompañamiento en sucursal'], other:true },
-  { id:'3', l:'¿Quién impartió esa formación?', type:'radio', o:['Equipo interno de BBVA','Salesforce','Otro proveedor','Esquema mixto'] },
-  { id:'4', l:'¿Existe una red de champions o agentes de cambio en la red comercial?', type:'radio', o:['Sí, formalmente constituida','Sí, de manera informal','No'], x:'¿Cuántos integrantes?', xp:'Número aproximado' },
-  { id:'5', l:'¿Qué programas recientes de liderazgo o de acompañamiento del cambio debemos tomar como base?', type:'textarea', ph:'Nombre del programa, niveles que participaron y fecha aproximada' },
-  { id:'6', req:true, l:'¿Qué modalidades de formación prefiere BBVA para las siguientes fases?', type:'checks', o:['Presencial en sucursal','Presencial en sede regional','Virtual en vivo','En línea, a ritmo propio','Combinada'] },
-  { id:'7', l:'¿Qué plataforma de aprendizaje y qué disponibilidad de tiempo debemos considerar?', type:'group', f:[
-      {id:'plat', l:'Plataforma de aprendizaje', type:'text', ph:'Ej. Campus BBVA'},
-      {id:'hrs', l:'Horas al mes por persona', type:'text', ph:'Ej. 3 a 4 horas'},
-      {id:'evitar', l:'Periodos a evitar', type:'text', ph:'Ej. cierres de mes, campañas'} ]}
+{ id:'s5', t:'Gestión del cambio y liderazgo', d:'Lo que BBVA ya ha realizado, para darle continuidad.', q:[
+  { id:'1', req:true, l:'¿Qué abarcó la formación reciente de líderes en apertura y acompañamiento del cambio?', type:'textarea', ph:'Niveles que participaron, contenidos y fecha aproximada' },
+  { id:'2', req:true, l:'¿El uso de SFSC forma parte del seguimiento que hacen gerentes y directores con sus equipos?', type:'radio', o:['Sí, ya forma parte','Está previsto','Todavía no'] },
+  { id:'3', l:'¿Qué acciones de comunicación se han realizado para SFSC?', type:'checks', o:['Comunicados institucionales','Sesiones informativas','Videos o cápsulas','Red de embajadores o champions','Materiales para líderes'], other:true }
 ]},
-{ id:'s6', t:'Soporte y evolución de la plataforma', d:'Cómo se atienden hoy las solicitudes de los usuarios.', q:[
+{ id:'s6', t:'Formación: modelo de despliegue y condiciones', d:'Cómo se llevaría la formación a los usuarios y con qué insumos.', q:[
+  { id:'1', req:true, l:'¿Cómo prefiere BBVA llevar la formación a los usuarios?', type:'radio', o:['Con formadores internos de BBVA, preparados por nuestro equipo (Train the Trainers)','Nuestro equipo capacita directamente a todos los usuarios','Esquema combinado','Por definir'] },
+  { id:'2', req:true, l:'¿Cuántas personas actuarían como formadores, champions o coaches, y de qué perfiles?', type:'group', f:[
+      {id:'n', l:'Personas (aprox.)', type:'number'},
+      {id:'perf', l:'Perfiles', type:'text', ph:'Ej. gerentes de sucursal, champions, coaches'} ]},
+  { id:'3', req:true, l:'¿El bootcamp y los workshops serían virtuales o presenciales?', type:'radio', o:['Virtuales','Presenciales','Combinados','Por definir'] },
+  { id:'4', req:true, l:'¿Tendremos acceso al ambiente de pruebas de SFSC y a la información de flujos y funcionalidades?', type:'radio', o:['Sí, acceso directo','Solo demostraciones o capturas','Todavía no'],
+    s:{l:'¿Los participantes podrán practicar ahí?', o:['Sí','No','Por definir']} },
+  { id:'5', l:'¿Qué formatos y lineamientos deben cumplir los contenidos para Campus BBVA, y quién los carga?', type:'group', f:[
+      {id:'fmt', l:'Formatos admitidos', type:'text', ph:'Ej. SCORM, video, PDF'},
+      {id:'lin', l:'Lineamientos', type:'text', ph:'Ej. duración, identidad, accesibilidad'},
+      {id:'area', l:'Área que carga los contenidos', type:'text'} ]},
+  { id:'6', l:'¿Qué formación y materiales sobre SFSC existen hoy y podrían reutilizarse?', type:'checks', o:['Sesiones presenciales','Sesiones virtuales','Cursos en línea','Videos','Manuales o guías','Ninguno'] }
+]},
+{ id:'s7', t:'Equipo técnico y soporte', d:'Cómo se atienden hoy las solicitudes de los usuarios.', q:[
   { id:'1', req:true, l:'¿Por qué canales reporta el usuario una incidencia o solicitud?', type:'checks', o:['Mesa de ayuda','Herramienta de tickets','A través de su gerente','Correo o chat interno','Champions o referentes'], other:true },
-  { id:'2', l:'¿Cuánto tarda habitualmente la respuesta a una solicitud?', type:'radio', o:['El mismo día','De 2 a 5 días','De 1 a 2 semanas','Más de 2 semanas','Varía según el tipo'] },
-  { id:'3', l:'¿Cuántas solicitudes de usuarios se recibieron al mes durante el piloto?', type:'radio', o:['Menos de 50','Entre 50 y 200','Entre 200 y 500','Más de 500','No disponible'] },
-  { id:'4', req:true, l:'¿Qué áreas participan en la priorización de mejoras?', type:'checks', o:['Negocio','Arquitectura','Tecnología','Equipo de producto o CRM'], other:true },
-  { id:'5', l:'¿Cómo es el equipo interno de Salesforce y cada cuánto libera cambios?', type:'group', f:[
-      {id:'tam', l:'Personas en el equipo', type:'number'},
-      {id:'ciclo', l:'Frecuencia de liberaciones', type:'select', o:['Semanal','Quincenal','Mensual','Trimestral','Otra']} ]},
-  { id:'6', l:'¿Qué lineamientos aplican a la participación de equipos externos?', type:'textarea', ph:'Accesos, ambientes y aprobaciones que deban considerarse' }
+  { id:'2', req:true, l:'¿Cuántas solicitudes de usuarios se reciben al mes?', type:'radio', o:['Menos de 50','Entre 50 y 200','Entre 200 y 500','Más de 500','No disponible'] },
+  { id:'3', l:'¿Le interesa a BBVA fortalecer a su equipo técnico de Salesforce como parte del programa?', type:'checks', o:['Certificación Administrator','Certificación Platform Developer','Especialización en Financial Services Cloud','No por ahora'] }
 ]},
-{ id:'s7', t:'Proceso y contacto', d:'Para preparar la propuesta en los tiempos y el formato que BBVA requiere.', q:[
-  { id:'1', l:'¿Qué áreas participan en la decisión?', type:'checks', o:['Banca Comercial','Talento y Cultura','Tecnología y Arquitectura','Compras'], other:true },
-  { id:'2', req:true, l:'¿Qué fechas y requisitos del proceso de contratación debemos considerar?', type:'textarea', ph:'Fechas de la licitación, formato de la propuesta y documentación requerida' },
-  { id:'3', l:'¿A quién podemos contactar para aclaraciones?', type:'group', f:[ {id:'nom', l:'Nombre', type:'text'}, {id:'mail', l:'Correo', type:'email'} ] },
-  { id:'4', l:'¿Desea agregar algún comentario?', type:'textarea' }
+{ id:'s8', t:'Proceso de contratación', d:'Para preparar la propuesta en el formato que BBVA requiere.', q:[
+  { id:'1', req:true, l:'¿Qué formato y qué documentación requiere la licitación?', type:'textarea', ph:'Formato de la propuesta y documentación requerida' },
+  { id:'2', l:'¿Cómo prefiere BBVA recibir la propuesta?', type:'radio', o:['Integral','Por módulos que puedan contratarse por separado','Por definir'] },
+  { id:'3', l:'¿Desea agregar algún comentario?', type:'textarea' }
 ]}
 ];
 
@@ -421,6 +416,7 @@ SECCIONES.forEach((s, si) => {
       ctl.appendChild(g);
       if (q.other) ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_o', text:'Otro'}), input('text', key + '__otro', {id:id + '_o', ph:'Especifique'})]));
       if (q.x) ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_x', text:q.x}), input('text', key + '__nota', {id:id + '_x', ph:q.xp})]));
+      if (q.s) ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_s', text:q.s.l}), input('select', key + '__sel', {id:id + '_s', o:q.s.o})]));
     } else if (q.type === 'group'){
       const g = h('div', {class:'grid'});
       q.f.forEach(f => g.appendChild(h('div', {class:'f'}, [h('label', {for:id + '_' + f.id, text:f.l}), input(f.type, key + '__' + f.id, {id:id + '_' + f.id, o:f.o, ph:f.ph})])));
@@ -518,9 +514,11 @@ function collect(){
     const key = s.id + '_' + q.id, num = (si + 1) + '.' + q.id, push = (p, r) => out.push({seccion:(si + 1) + '. ' + s.t, numero:num, pregunta:p, respuesta:r});
     if (q.type === 'radio'){
       const c = document.querySelector('input[name="' + key + '"]:checked'), n = q.x ? val(key + '__nota') : '';
-      push(q.l, [c ? c.value : '', n].filter(Boolean).join(' — '));
+      const sl = q.s ? val(key + '__sel') : '';
+      push(q.l, [c ? c.value : '', n, sl ? q.s.l + ' ' + sl : ''].filter(Boolean).join(' — '));
     } else if (q.type === 'checks'){
       const sel = q.o.filter((o, i) => val(key + '__' + i)); if (q.other && val(key + '__otro')) sel.push('Otro: ' + val(key + '__otro'));
+      if (q.s && val(key + '__sel')) sel.push(q.s.l + ' ' + val(key + '__sel'));
       push(q.l, sel.join('; '));
     } else if (q.type === 'group'){
       q.f.forEach(f => push(q.l + ' — ' + f.l, val(key + '__' + f.id)));
