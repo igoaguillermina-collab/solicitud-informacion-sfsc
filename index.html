@@ -269,6 +269,7 @@ footer.ft{max-width:1120px;margin:0 auto;padding:0 24px 110px;font-size:12.5px;c
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzqkksEGhefUGRYYnzks-WoejemtMSQvUy5QcSEJ2G6tWVjJCT8Ee-eT1sn70dHk3cY/exec';
 const EN_LINEA = !!ENDPOINT;
 const CONTACTO = 'nelly.cervantes@skala.global';
+const COPIA = 'guillermina@skala.global';   // recibe copia del correo de respaldo
 const STORE = 'bbva_sfsc_datarequest_v3';
 let sucio = false;      // hay cambios que aún no se guardan con el equipo
 let timer = null;
@@ -635,7 +636,8 @@ go(Number(state.__step) || 0, false);
 
 /* ---------- Envío final ---------- */
 const MAILTO = 'mailto:' + CONTACTO
-  + '?subject=' + encodeURIComponent('Data request SFSC – respuestas de BBVA')
+  + '?cc=' + COPIA
+  + '&subject=' + encodeURIComponent('Data request SFSC – respuestas de BBVA')
   + '&body=' + encodeURIComponent('Estimada Nelly:\n\nAdjunto el archivo con nuestras respuestas al data request.\n\nSaludos,');
 function correo(){ return h('a', {href:MAILTO, text:CONTACTO}); }
 function botonCorreo(){ return h('a', {href:MAILTO, class:'btn pri mailbtn', text:'Abrir correo para ' + CONTACTO}); }
