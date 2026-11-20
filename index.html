@@ -246,7 +246,7 @@ footer.ft{max-width:1120px;margin:0 auto;padding:0 24px 110px;font-size:12.5px;c
   </main>
 </div>
 
-<footer class="ft">La información compartida se utilizará únicamente para preparar la propuesta solicitada por BBVA México y se tratará como confidencial. · Contacto: Nelly Cervantes, <a href="mailto:nelly.cervantes@skala.global">nelly.cervantes@skala.global</a></footer>
+<footer class="ft">La información compartida se utilizará únicamente para preparar la propuesta solicitada por BBVA México y se tratará como confidencial. Para cualquier duda, puede escribir a <a href="mailto:nelly.cervantes@skala.global">nelly.cervantes@skala.global</a>.</footer>
 
 <div class="bar"><div class="in">
   <div class="prog"><div class="tx"><span id="pTx"></span><span class="saved" id="saved" role="status"></span></div><div class="tr"><div class="fl" id="pFl"></div></div></div>
@@ -636,9 +636,7 @@ function botonCorreo(){ return h('a', {href:MAILTO, class:'btn pri mailbtn', tex
 const TX = EN_LINEA ? {
   btn: 'Enviar respuestas',
   d: 'Sus respuestas llegan directamente al equipo de Skala y EmTech Institute.',
-  l: [['Su avance se guarda con nuestro equipo a medida que responde; al enviar, lo registramos como definitivo. No es necesario mandar ningún archivo por correo.'],
-      ['Para enviar se requieren las respuestas marcadas con *. Puede guardar su avance y completarlas después.'],
-      ['Para cualquier duda, puede escribir a ', correo, '.']]
+  l: [['Para enviar se requieren las respuestas marcadas con *. Puede guardar su avance y completarlas después.']]
 } : {
   btn: 'Descargar respuestas',
   d: 'El envío se completa por correo electrónico, con el archivo que genera este formulario.',
@@ -647,7 +645,7 @@ const TX = EN_LINEA ? {
 };
 document.getElementById('finD').textContent = TX.d;
 TX.l.forEach(parts => document.getElementById('finL').appendChild(h('li', null, parts.map(p => typeof p === 'function' ? p() : tx(p)))));
-document.querySelectorAll('footer.ft a').forEach(a => { a.href = MAILTO; });
+document.querySelectorAll('footer.ft a').forEach(a => { a.href = 'mailto:' + CONTACTO + '?subject=' + encodeURIComponent('Data request SFSC – consulta'); });
 const sendBtns = [bSend, document.getElementById('bSend2')];
 function setBtns(t, off){ sendBtns.forEach(b => { b.textContent = t; b.disabled = off; }); }
 setBtns(TX.btn, false);
