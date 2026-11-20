@@ -291,7 +291,7 @@ const SECCIONES = [
   { id:'3', l:'¿Cuándo está previsto retirar la herramienta anterior?', type:'radio', o:['Ya tiene fecha','Cuando SFSC se estabilice, sin fecha definida','Por definir'], x:'Fecha estimada', xp:'Ej. segundo semestre de 2027' }
 ]},
 { id:'s4', t:'Experiencia del piloto', d:'Lo aprendido hasta ahora, como punto de partida.', q:[
-  { id:'1', req:true, l:'De las áreas de oportunidad que dejó el piloto, ¿cuál pesa más de cara a las siguientes fases?', type:'radio', o:['La comunicación de la iniciativa','La implementación','La agilidad para responder a los usuarios'], x:'¿Por qué?', xp:'Lo que BBVA quisiera hacer distinto en las siguientes fases' },
+  { id:'1', req:true, l:'De las áreas de oportunidad que dejó el piloto, ¿cuál pesa más de cara a las siguientes fases?', type:'radio', o:['La comunicación de la iniciativa','La implementación','La agilidad para responder a los usuarios','Otro'], other:true, x:'¿Por qué?', xp:'Lo que BBVA quisiera hacer distinto en las siguientes fases' },
   { id:'2', l:'¿Con qué indicadores de uso cuenta BBVA y podrían compartirse en forma agregada?', type:'checks', o:['Usuarios activos','Frecuencia de acceso','Registros por usuario','Uso por rol o por sucursal','Aún no se cuenta con indicadores'],
     s:{l:'¿Podrían compartirse?', o:['Sí','Tras el acuerdo de confidencialidad','No']} },
   { id:'3', l:'¿Qué temas han reportado los usuarios con mayor frecuencia?', type:'checks', o:['Accesos y perfiles','Disponibilidad o calidad de los datos','Desempeño de la plataforma','Funcionalidades que aún no están disponibles','Navegación y facilidad de uso','Integración con otros sistemas','Dudas sobre el uso o el proceso'], other:true }
@@ -413,7 +413,11 @@ SECCIONES.forEach((s, si) => {
         g.appendChild(h('label', {class:'opt'}, [inp, o]));
       });
       ctl.appendChild(g);
-      if (q.other) ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_o', text:'Otro'}), input('text', key + '__otro', {id:id + '_o', ph:'Especifique'})]));
+      if (q.other){
+        const ot = input('text', key + '__otro', {id:id + '_o', ph:'Especifique'});
+        if (q.type === 'radio') ot.addEventListener('input', () => { if (ot.value.trim()){ const r = g.querySelector('input[value="Otro"]'); if (r) r.checked = true; } });
+        ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_o', text:'Otro'}), ot]));
+      }
       if (q.x) ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_x', text:q.x}), input('text', key + '__nota', {id:id + '_x', ph:q.xp})]));
       if (q.s) ctl.appendChild(h('div', {class:'extra'}, [h('label', {for:id + '_s', text:q.s.l}), input('select', key + '__sel', {id:id + '_s', o:q.s.o})]));
     } else if (q.type === 'group'){
@@ -514,7 +518,10 @@ function collect(){
     if (q.type === 'radio'){
       const c = document.querySelector('input[name="' + key + '"]:checked'), n = q.x ? val(key + '__nota') : '';
       const sl = q.s ? val(key + '__sel') : '';
-      push(q.l, [c ? c.value : '', n, sl ? q.s.l + ' ' + sl : ''].filter(Boolean).join(' — '));
+      const ot = q.other ? val(key + '__otro') : '';
+      let v = c ? c.value : '';
+      if (ot) v = (!v || v === 'Otro') ? 'Otro: ' + ot : v + ' (Otro: ' + ot + ')';
+      push(q.l, [v, n, sl ? q.s.l + ' ' + sl : ''].filter(Boolean).join(' — '));
     } else if (q.type === 'checks'){
       const sel = q.o.filter((o, i) => val(key + '__' + i)); if (q.other && val(key + '__otro')) sel.push('Otro: ' + val(key + '__otro'));
       if (q.s && val(key + '__sel')) sel.push(q.s.l + ' ' + val(key + '__sel'));
